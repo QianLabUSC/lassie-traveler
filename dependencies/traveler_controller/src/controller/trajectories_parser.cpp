@@ -315,6 +315,13 @@ namespace traveler_namespace
                 // create dummy prev waypoint using current leg position
                 prev_waypoint_ = Waypoint(traveler.traveler_chassis.Leg_lf.toe_position, 0.0f, 0.0f);
                 curr_waypoint_ = waypoints_[waypoint_index_];
+                traj_complete_ = false;
+                printf('Waypoint Trajectory Initialized\n');
+                printf('Current Waypoint: (%f, %f)\n', curr_waypoint_.point.x, curr_waypoint_.point.y);
+            }
+            
+            if (traj_complete_) {
+                return true;
             }
             
             // uses the waypoint index to determine which point to go to and at what speed
@@ -326,10 +333,14 @@ namespace traveler_namespace
                 if (waypoint_index_ < waypoints_.size()) {
                     prev_waypoint_ = curr_waypoint_;
                     curr_waypoint_ = waypoints_[waypoint_index_];
+                    printf('Current Waypoint: (%f, %f)\n', curr_waypoint_.point.x, curr_waypoint_.point.y);
                 } else if (waypoint_index_ == waypoints_.size()){
                     prev_waypoint_ = curr_waypoint_;
                     curr_waypoint_ = waypoints_[0]; // return to first waypoint
+                    printf('Current Waypoint: (%f, %f)\n', curr_waypoint_.point.x, curr_waypoint_.point.y);
                 } else {
+                    printf('Waypoint Trajectory Complete\n');
+                    traj_complete_ = true;
                     return true;
                 }
             }
@@ -408,7 +419,7 @@ namespace traveler_namespace
                     float L = traveler.traj_data.extrude_depth + traveler.traj_data.ground_height;
                     // define start and end points
                     float starting_extension = max((traveler.traj_data.ground_height - 0.03f), (L2 - L1 + L3 + 0.01f));
-                    printf("Penetration Trial with Angle %f degrees, L: %f, Starting Extension: %f", theta, L, starting_extension);
+                    printf("Penetration Trial with Angle %f degrees, L: %f, Starting Extension: %f\n", theta, L, starting_extension);
                     XY_pair start_;
                     XY_pair end_;
                     abstractToPhysical(starting_extension, theta, start_);
@@ -749,6 +760,7 @@ namespace traveler_namespace
             {
             // *Extrusion Trajectory
             case 1:
+            {
                 if (first_iteration)
                 {
                     printf("Extrusion Trajectory\n");
@@ -757,7 +769,7 @@ namespace traveler_namespace
                 // penetrate(traveler);
                 waypointTrajectory(traveler);
                 break;
-
+            }
             // *Workspace Traversal
             case 2:
                 if (traverseParams.run)
@@ -768,10 +780,11 @@ namespace traveler_namespace
 
             // *Penetrate and Shear
             case 3:
-                penetrateAndShearRoutine(traveler);
+            {
+                // penetrateAndShearRoutine(traveler);
                 waypointTrajectory(traveler);
                 break;
-
+            }
             // *Static Leg movement
             case 4:
                 if (first_iteration)

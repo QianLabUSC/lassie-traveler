@@ -37,29 +37,6 @@ struct Waypoint {
     }
 };
 
-XY_pair mapPointToCircleBoundary(const XY_pair& A, double R) {
-    // Calculate the distance of A from the origin
-    double d = std::sqrt(A.x * A.x + A.y * A.y);
-    
-    XY_pair B;
-    B.x = (R / d) * A.x;
-    B.y = (R / d) * A.y;
-    
-    return B;
-}
-
-/**
- * @brief Maps a point to the boundary of a circle with radius R and center at the origin
- * @note This function is a faster function for the case where the distance d is already known
-*/
-XY_pair mapPointToCircleBoundary(const XY_pair& A, double R, double d) {
-    XY_pair B;
-    B.x = (R / d) * A.x;
-    B.y = (R / d) * A.y;
-    
-    return B;
-}
-
 struct Theta_L_pair {
     float theta;
     float L;

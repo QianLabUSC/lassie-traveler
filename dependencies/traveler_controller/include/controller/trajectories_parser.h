@@ -215,7 +215,7 @@ namespace control{
         int waypoint_index_ = 0;
         int waypoint_state_ = 0;
         bool waypoint_first_iteration_ = true;
-        bool waypoint_valid_ = false;
+        bool traj_complete_ = false;
 
         PS_Params ps;
 
