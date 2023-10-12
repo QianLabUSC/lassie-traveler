@@ -316,8 +316,8 @@ namespace traveler_namespace
                 prev_waypoint_ = Waypoint(traveler.traveler_chassis.Leg_lf.toe_position, 0.0f, 0.0f);
                 curr_waypoint_ = waypoints_[waypoint_index_];
                 traj_complete_ = false;
-                printf('Waypoint Trajectory Initialized\n');
-                printf('Current Waypoint: (%f, %f)\n', curr_waypoint_.point.x, curr_waypoint_.point.y);
+                printf("Waypoint Trajectory Initialized\n");
+                printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
             }
             
             if (traj_complete_) {
@@ -333,13 +333,13 @@ namespace traveler_namespace
                 if (waypoint_index_ < waypoints_.size()) {
                     prev_waypoint_ = curr_waypoint_;
                     curr_waypoint_ = waypoints_[waypoint_index_];
-                    printf('Current Waypoint: (%f, %f)\n', curr_waypoint_.point.x, curr_waypoint_.point.y);
+                    printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
                 } else if (waypoint_index_ == waypoints_.size()){
                     prev_waypoint_ = curr_waypoint_;
                     curr_waypoint_ = waypoints_[0]; // return to first waypoint
-                    printf('Current Waypoint: (%f, %f)\n', curr_waypoint_.point.x, curr_waypoint_.point.y);
+                    printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
                 } else {
-                    printf('Waypoint Trajectory Complete\n');
+                    printf("Waypoint Trajectory Complete\n");
                     traj_complete_ = true;
                     return true;
                 }
