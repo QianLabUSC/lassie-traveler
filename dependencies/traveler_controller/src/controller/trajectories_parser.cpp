@@ -374,6 +374,7 @@ namespace traveler_namespace
                     }
                     return false;
             }
+            return false;
         }
 
         /**
@@ -401,6 +402,7 @@ namespace traveler_namespace
             switch(trajectory)
             {
                 case 1:
+                {
                     // extrusion
                     float theta = traveler.traj_data.extrude_angle;
                     float L = traveler.traj_data.extrude_depth + traveler.traj_data.ground_height;
@@ -415,10 +417,12 @@ namespace traveler_namespace
                     waypoints_.push_back(Waypoint(start_, traveler.traj_data.back_speed, 2.0f));
                     waypoints_.push_back(Waypoint(end_, traveler.traj_data.extrude_speed, 2.0f));
                     break;
+                }
                 case 2:
                     // workspace traversal
                     break;
                 case 3:
+                {
                     // *penetrate and shear
                     /**
                      * trajectory is shaped like a pentagon. 
@@ -444,6 +448,7 @@ namespace traveler_namespace
                     waypoints_.push_back(Waypoint(-1.0f * pene_start_x, pene_start_y, traveler.traj_data.shear_return_speed, 1.0f));
 
                     break;
+                }
                 case 4:
                     // static leg movement
                     break;
