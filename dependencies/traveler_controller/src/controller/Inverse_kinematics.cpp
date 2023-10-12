@@ -236,8 +236,8 @@ bool clamp_XY(float &x, float &y, float L) {
 
 bool clamp_XY(XY_pair &P, float L) {
     // calculate L if not provided
-    x = P.x;
-    y = P.y;
+    float x = P.x;
+    float y = P.y;
     if (L == 0.0f) { 
         L = sqrtf(x*x + y*y);
     } 
