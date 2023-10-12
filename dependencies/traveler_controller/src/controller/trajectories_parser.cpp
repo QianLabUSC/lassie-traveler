@@ -43,7 +43,7 @@ namespace traveler_namespace
 
         void TrajectoriesParser::cartesianMotorCommand(Traveler &traveler, float target_x_, float target_y_)
         {
-            physicalToAbstract(target_x_, target_y_, theta_, gamma_);
+            physicalToAbstract(target_x_, target_y_, theta_, gamma_, true);
             setCoupledPosition(traveler);
         }
 
@@ -141,13 +141,13 @@ namespace traveler_namespace
                 abstractToPhysical(starting_extension, theta, penetration_start);
                 abstractToPhysical(L, theta, penetration_end);
 
-                start = chrono::steady_clock::now();
+                clock_start_ = chrono::steady_clock::now();
                 // printf(".............Penetrating................\n");
                 
             }
 
             auto now = chrono::steady_clock::now();
-            float t = chrono::duration<float>(now - start).count();
+            float t = chrono::duration<float>(now - clock_start_).count();
             float delay_elapsed;
             switch (Pene_state)
             {
@@ -169,7 +169,7 @@ namespace traveler_namespace
                 if (delay_elapsed > delay)
                 {
                     Pene_state++;
-                    start = chrono::steady_clock::now();
+                    clock_start_ = chrono::steady_clock::now();
                 }
                 
                 break;
@@ -195,7 +195,7 @@ namespace traveler_namespace
                 if (delay_elapsed > delay)
                 {
                     Pene_state++;
-                    start = chrono::steady_clock::now();
+                    clock_start_ = chrono::steady_clock::now();
                 }
                 
                 break;
@@ -303,6 +303,163 @@ namespace traveler_namespace
             
             return false;
         }
+
+        bool TrajectoriesParser::waypointTrajectory(Traveler &traveler) {
+            if (first_iteration) {
+                generateWaypoints(traveler);
+                clock_start_ = chrono::steady_clock::now();
+                
+                waypoint_index_ = 0;
+                waypoint_state_ = 0;
+
+                // create dummy prev waypoint using current leg position
+                prev_waypoint_ = Waypoint(traveler.traveler_chassis.Leg_lf.toe_position, 0.0f, 0.0f);
+                curr_waypoint_ = waypoints_[waypoint_index_];
+            }
+            
+            // uses the waypoint index to determine which point to go to and at what speed
+            // once there, delays at the point for given time
+            // then gets next point.
+            
+            if (processWaypoint(traveler)) {
+                waypoint_index_++;
+                if (waypoint_index_ < waypoints_.size()) {
+                    prev_waypoint_ = curr_waypoint_;
+                    curr_waypoint_ = waypoints_[waypoint_index_];
+                } else if (waypoint_index_ == waypoints_.size()){
+                    prev_waypoint_ = curr_waypoint_;
+                    curr_waypoint_ = waypoints_[0]; // return to first waypoint
+                } else {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        bool TrajectoriesParser::processWaypoint(Traveler &traveler) {
+            t_ = chrono::duration<float>(clock_now_ - clock_start_).count();
+            
+            switch(waypoint_state_) {
+                case 0: // Initial state of going to a given waypoint
+                    // store prev position and current waypoint
+                    // check if line from prev to current waypoint is valid
+                    // increment waypoint state
+
+                    // ensure that the current waypoint is in bounds
+                    clamp_XY(curr_waypoint_.point);
+
+                    // set a timer reference for the next state
+                    clock_start_ = chrono::steady_clock::now();
+                    waypoint_state_++; // increment state
+                    return false
+                case 1: // Travel to waypoint
+
+                    if (linearTraj(t_, curr_waypoint_.vel, prev_waypoint_.point, curr_waypoint_.point, target_x, target_y))
+                    {
+                        waypoint_state_++;
+                        clock_start_ = chrono::steady_clock::now(); // reset the start clock
+                    }
+
+                    // command leg to target position
+                    cartesianMotorCommand(traveler, target_x, target_y);    
+                    return false;
+                case 2: // Delay at waypoint
+                    // check if delay is complete
+                    // increment waypoint state
+                    if (t_ > curr_waypoint_.delay)
+                    {
+                        waypoint_state_ = 0;
+                        return true;
+                    }
+                    return false;
+            }
+        }
+
+        /**
+         *Generates waypoint vectors using following variables:
+         **Extrustion Trajectory Parameters
+         *   float extrude_speed;                    // given as cm/s
+         *   float back_speed;
+         *   float extrude_angle;                    // given as deg
+         *   float extrude_depth;                   // defined as the leg extension at the end of the extrusion,
+         *                                           // not the total length of extrusion.
+         **Penetration and Shear Parameters
+         *   float shear_penetration_depth;          // given as cm
+         *   float shear_penetration_speed;          // given as cm/s
+         *   float shear_penetration_delay;          // given as sec
+         *   float shear_length;                     // given as cm
+         *   float shear_speed;                      // given as cm/s
+         *   float shear_delay;                      // given as seconds
+         *   float shear_return_speed;               // given as cm/s
+         * 
+        */
+        void TrajectoriesParser::generateWaypoints(Traveler &traveler) {
+            // clear out any old waypoints
+            waypoints_.clear();
+
+            switch(traveler.traveler_gui.drag_traj)
+            {
+                case 1:
+                    // extrusion
+                    float theta = traveler.traj_data.extrude_angle;
+                    float L = traveler.traj_data.extrude_depth + traveler.traj_data.ground_height;
+                    // define start and end points
+                    float starting_extension = max((traveler.traj_data.ground_height - 0.03f), (L2 - L1 + L3 + 0.01f));
+                    printf("Penetration Trial with Angle %f degrees, L: %f, Starting Extension: %f", theta, L, starting_extension);
+                    XY_pair start_;
+                    XY_pair end_;
+                    abstractToPhysical(starting_extension, theta, start_);
+                    abstractToPhysical(L, theta, end_);
+
+                    waypoints_.push_back(Waypoint(start_, traveler.traj_data.back_speed, 2.0f));
+                    waypoints_.push_back(Waypoint(end_, traveler.traj_data.extrude_speed, 2.0f));
+                    break;
+                case 2:
+                    // workspace traversal
+                    break;
+                case 3:
+                    // *penetrate and shear
+                    /**
+                     * trajectory is shaped like a pentagon. 
+                     * 1. First waypoint is the starting position, at x=0, y 2cm above ground if possible
+                     * 2. Second waypoint is the start of the penetration, located at +shear_length/2, 1cm above ground height
+                     * 3. Third waypoint is the end of the penetration and start of shear, located at +shear_length/2, -shear_penetration_depth
+                     * 4. Fourth waypoint is the end of the shear, located at -shear_length/2, -shear_penetration_depth
+                     * 5. Fifth waypoint is the retraction after shear, to -shear_length/2, 1cm above ground height
+                    */
+
+                    // 1. First waypoint is the starting position, at x=0, y 2cm above ground if possible
+                    float starting_extension = -1.0f * max((traveler.traj_data.ground_height - 0.03), (L2 - L1 + L3 + 0.01));
+
+                    // 2. Second waypoint is the start of the penetration, located at +shear_length/2, 1cm above ground height
+                    float pene_start_y = -1.0f * (traveler.traj_data.ground_height - 0.01);
+                    float shear_y = -1.0f * (traveler.traj_data.shear_penetration_depth + traveler.traj_data.ground_height);
+                    float pene_start_x = traveler.traj_data.shear_length / 2.0f;
+
+                    waypoints_.push_back(Waypoint(0.0f, starting_extension, traveler.traj_data.shear_return_speed, 1.0f));
+                    waypoints_.push_back(Waypoint(pene_start_x, pene_start_y, traveler.traj_data.shear_return_speed, 1.0f));
+                    waypoints_.push_back(Waypoint(pene_start_x, shear_y, traveler.traj_data.shear_penetration_speed, traveler.traj_data.shear_penetration_delay));
+                    waypoints_.push_back(Waypoint(-1.0f * pene_start_x, shear_y, traveler.traj_data.shear_speed, traveler.traj_data.shear_delay));
+                    waypoints_.push_back(Waypoint(-1.0f * pene_start_x, pene_start_y, traveler.traj_data.shear_return_speed, 1.0f));
+
+                    break;
+                case 4:
+                    // static leg movement
+                    break;
+                default:
+                    // no trajectory selected
+                    break;
+            }
+
+            // print out waypoints
+            printf("Waypoints:\n")
+            for (int i = 0; i < waypoints_.size(); i++) {
+                printf("Waypoint %d: (%f, %f), vel: %f, delay: %f\n", i, waypoints_[i].point.x, waypoints_[i].point.y, waypoints_[i].vel, waypoints_[i].delay);
+            }
+        }
+
+        
 
         bool TrajectoriesParser::penetrateAndShearRoutine(Traveler &traveler) {
             if (ps.first_iteration) {
@@ -559,6 +716,10 @@ namespace traveler_namespace
             {
                 // printTrajData(traveler);
                 first_iteration = true;
+                clock_start_ = chrono::steady_clock::now();
+                clock1_start_ = chrono::steady_clock::now();
+                clock2_start_ = chrono::steady_clock::now();
+
                 GTP_first_iteration = true;
                 traverseParams.run = true;
                 run_ = true;
@@ -576,6 +737,9 @@ namespace traveler_namespace
                     return;
                 }
             }
+            
+            // get current time
+            clock_now_ = chrono::steady_clock::now();
             switch (trajectory)
             {
             // *Extrusion Trajectory
@@ -585,7 +749,8 @@ namespace traveler_namespace
                     printf("Extrusion Trajectory\n");
                     printf("Starting Toe Position: (%f, %f)\n", traveler.traveler_chassis.Leg_lf.toe_position.x, traveler.traveler_chassis.Leg_lf.toe_position.y);
                 }
-                penetrate(traveler);
+                // penetrate(traveler);
+                waypointTrajectory(traveler);
                 break;
 
             // *Workspace Traversal
@@ -599,6 +764,7 @@ namespace traveler_namespace
             // *Penetrate and Shear
             case 3:
                 penetrateAndShearRoutine(traveler);
+                waypointTrajectory(traveler);
                 break;
 
             // *Static Leg movement

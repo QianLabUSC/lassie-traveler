@@ -66,6 +66,25 @@ namespace control{
          */
         bool detectGround(Traveler &);
 
+
+        /**
+         * @brief Takes toe through a series of waypoints.
+         * 
+         * @returns True-> complete, false-> not complete
+        */
+        bool waypointTrajectory(Traveler &);
+
+        /**
+         * @brief Generates a vector of waypoints depending on GUI traj
+        */
+        void generateWaypoints(Traveler &);
+
+        /**
+         * @brief Processes a single waypoint
+         * @return True-> complete, false-> not complete
+        */
+        bool processWaypoint(Traveler &);
+
         /**
          * @brief Performs a homing movement on startup.
          *          Due to the startup of the ODrive S1/Pro with absolute encoder,
@@ -114,7 +133,13 @@ namespace control{
          */
         bool first_iteration = false;
         int state_flag = 0;
-        std::chrono::steady_clock::time_point start; // chrono literal
+        std::chrono::steady_clock::time_point clock_start_; // chrono literal
+        std::chrono::steady_clock::time_point clock1_start_; // chrono literal
+        std::chrono::steady_clock::time_point clock2_start_; // chrono literal
+        std::chrono::steady_clock::time_point clock_now_; // chrono literal
+        float t_ = 0.0f; // time counter float
+
+
         std::chrono::steady_clock::time_point GTP_start;
         std::chrono::steady_clock::time_point DG_start;
         
@@ -178,6 +203,19 @@ namespace control{
             float curr_vel;
             float curr_delay;
         };
+
+        /**
+         * WAYPOINT TRAJ STATE VARIABLES
+        */
+        // generic vector for holding waypoints
+        std::vector<Waypoint> waypoints_;
+        Waypoint curr_waypoint_;
+        Waypoint prev_waypoint_;
+        // iterator for waypoints
+        int waypoint_index_ = 0;
+        int waypoint_state_ = 0;
+        bool waypoint_first_iteration_ = true;
+        bool waypoint_valid_ = false;
 
         PS_Params ps;
 

@@ -15,6 +15,51 @@ struct XY_pair{
     } 
 };
 
+struct Waypoint {
+    XY_pair point;
+    float vel;
+    float delay;
+
+    Waypoint() {
+        point = XY_pair();
+        vel = 0.0f;
+        delay = 0.0f;
+    }
+    Waypoint(XY_pair point_, float vel_, float delay_) {
+        point = point_;
+        vel = vel_;
+        delay = delay_;
+    }
+    Waypoint(float x_, float y_, float vel_, float delay_) {
+        point = XY_pair(x_, y_);
+        vel = vel_;
+        delay = delay_;
+    }
+};
+
+XY_pair mapPointToCircleBoundary(const XY_pair& A, double R) {
+    // Calculate the distance of A from the origin
+    double d = std::sqrt(A.x * A.x + A.y * A.y);
+    
+    XY_pair B;
+    B.x = (R / d) * A.x;
+    B.y = (R / d) * A.y;
+    
+    return B;
+}
+
+/**
+ * @brief Maps a point to the boundary of a circle with radius R and center at the origin
+ * @note This function is a faster function for the case where the distance d is already known
+*/
+XY_pair mapPointToCircleBoundary(const XY_pair& A, double R, double d) {
+    XY_pair B;
+    B.x = (R / d) * A.x;
+    B.y = (R / d) * A.y;
+    
+    return B;
+}
+
 struct Theta_L_pair {
     float theta;
     float L;

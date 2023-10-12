@@ -36,7 +36,7 @@ void getGamma(float L, float &gamma)
  */
 void physicalToAbstract(float X, float Y, float &L, float &theta, float &gamma)
 {
-    L = sqrt(pow(X, 2) + pow(Y, 2));
+    L = sqrt(X*X + Y*Y);
     theta = atan2(X, Y);
 
     float theta_temp = atan2(X, Y);
@@ -62,9 +62,14 @@ void physicalToAbstract(float X, float Y, float &L, float &theta, float &gamma)
  *
  * @return Returns <Theta, Gamma>
  */
-void physicalToAbstract(float X, float Y, float &theta, float &gamma)
+void physicalToAbstract(float X, float Y, float &theta, float &gamma, bool clamp)
 {
     float L = sqrt(X*X + Y*Y);
+
+    if (clamp) {
+        clamp_XY(X, Y, L);
+        L = sqrt(X*X + Y*Y); // recalculate L after clamping X,Y
+    }
 
     float theta_temp = atan2(X, Y);
     // compensates for -x, -y wrapping
@@ -180,7 +185,7 @@ bool validPath(XY_pair A, XY_pair B) {
     float b = B.x - A.x;
     float c = (A.x - B.x) *  A.y + A.x * (B.y - A.y);
     float dist = abs(c) / sqrt(a * a + b * b);
-    bool valid = (dist >= (0.105 + L3));
+    bool valid = (dist >= (MIN_EXT));
     // CASE: infinite line does not intersect circle
     if (valid) {
         printf("Path does not intersect center of leg\n");
@@ -211,13 +216,55 @@ bool validPath(XY_pair A, XY_pair B) {
     return (valid);
 }
 
+bool clamp_XY(float &x, float &y, float L) {
+    // calculate L if not provided
+    if (L == 0.0f) { 
+        L = sqrtf(x*x + y*y);
+    } 
+    if (L > (MAX_EXT)) {
+        x = (MAX_EXT) * x / L;
+        y = (MAX_EXT) * y / L;
+        return false;
+    } else if (L < (MIN_EXT)) {
+        x = (MIN_EXT) * x / L;
+        y = (MIN_EXT) * y / L;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool clamp_XY(XY_pair &P, float L) {
+    // calculate L if not provided
+    x = P.x;
+    y = P.y;
+    if (L == 0.0f) { 
+        L = sqrtf(x*x + y*y);
+    } 
+    if (L > (MAX_EXT)) {
+        x = (MAX_EXT) * x / L;
+        y = (MAX_EXT) * y / L;
+        P.x = x;
+        P.y = y;
+        return false;
+    } else if (L < (MIN_EXT)) {
+        x = (MIN_EXT) * x / L;
+        y = (MIN_EXT) * y / L;
+        P.x = x;
+        P.y = y;
+        return false;
+    } else {
+        return true;
+    }
+}
+
 Point_Pair findSwingPoints(XY_pair A, XY_pair B) {
     float m = (B.y - A.y) / (B.x - A.x);
     float b = ((B.x - A.x) * A.y - A.x * (B.y - A.y)) / (B.x - A.x);
 
     float A_ = (m * m + 1);
     float B_ = 2 * m * b;
-    float C_ = (b * b - (0.105 + L3) * (0.105 + L3));
+    float C_ = (b * b - (MIN_EXT) * (MIN_EXT));
 
     XY_pair xvals;
     xvals = findRoots(A_, B_, C_);
@@ -250,7 +297,7 @@ bool inBounds(float Gamma, float Theta, float L)
 {
     if (Gamma <= 0.087 || Gamma > 3.1 ||
         Theta < -2.47 || Theta > 2.47 ||
-        L <= (0.105 + L3) || L >= (0.29 + L3))
+        L <= (MIN_EXT) || L >= (MAX_EXT))
     {   // ! CALCULATE PRECISE L RANGE FROM GAMMA
         return false;
     } else {
@@ -265,7 +312,7 @@ bool inBounds(float x, float y)
 {
     float L = sqrtf(pow(x, 2) + pow(y, 2));
 
-    if (L <= (0.105 + L3) || L >= (0.29 + L3))
+    if (L <= (MIN_EXT) || L >= (MAX_EXT))
     {
         return false;
     } else {
@@ -282,7 +329,7 @@ bool inBounds(XY_pair ToeXY)
     
     float L = sqrtf(pow(ToeXY.x, 2) + pow(ToeXY.y, 2));
     printf("X: %f, Y: %f\n, L: %f", ToeXY.x, ToeXY.y, L);
-    if (L <= (0.105 + L3) || L >= (0.29 + L3))
+    if (L <= (MIN_EXT) || L >= (MAX_EXT))
     {
         return false;
     } else {

@@ -16,7 +16,7 @@
 void getGamma(float L, float& gamma);
 
 void physicalToAbstract(float X, float Y, float& L, float& theta, float& gamma);
-void physicalToAbstract(float X, float Y, float &theta, float &gamma);
+void physicalToAbstract(float X, float Y, float &theta, float &gamma, bool clamp = false);
 void PhysicalToAbstractWithExtension(float X, float Y, float &theta, float &gamma);
 
 void abstractToPhysical(float L, float Theta, float& x, float& y);
@@ -84,6 +84,26 @@ bool inBounds(XY_pair ToeXY);
  * @return false -> leg position is not in workspace
  */
 bool inBounds(float x, float y);
+
+
+/**
+ * @brief Checks if the position (x, y) is in the workspace
+ *          and if not, clamps to be in the workspace
+ * 
+ * @return true -> position is in workspace (no change)
+ * @return false -> position is not in workspace and was clamped
+*/
+bool clamp_XY(float &x, float &y, float L=0.0f);
+
+/**
+ * @brief Checks if the position (x, y) is in the workspace
+ *          and if not, clamps to be in the workspace
+ * 
+ * @return true -> position is in workspace (no change)
+ * @return false -> position is not in workspace and was clamped
+*/
+bool clamp_XY(XY_pair &P, float L=0.0f);
+
 
 // Prints roots of quadratic equation ax*2 + bx + x
 XY_pair findRoots(float a, float b, float c);
