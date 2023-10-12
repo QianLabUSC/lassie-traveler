@@ -352,7 +352,7 @@ namespace traveler_namespace
                     // set a timer reference for the next state
                     clock_start_ = chrono::steady_clock::now();
                     waypoint_state_++; // increment state
-                    return false
+                    return false;
                 case 1: // Travel to waypoint
 
                     if (linearTraj(t_, curr_waypoint_.vel, prev_waypoint_.point, curr_waypoint_.point, target_x, target_y))
@@ -397,8 +397,8 @@ namespace traveler_namespace
         void TrajectoriesParser::generateWaypoints(Traveler &traveler) {
             // clear out any old waypoints
             waypoints_.clear();
-
-            switch(traveler.traveler_gui.drag_traj)
+            int trajectory = traveler.traveler_gui.drag_traj;
+            switch(trajectory)
             {
                 case 1:
                     // extrusion
@@ -453,7 +453,7 @@ namespace traveler_namespace
             }
 
             // print out waypoints
-            printf("Waypoints:\n")
+            printf("Waypoints:\n");
             for (int i = 0; i < waypoints_.size(); i++) {
                 printf("Waypoint %d: (%f, %f), vel: %f, delay: %f\n", i, waypoints_[i].point.x, waypoints_[i].point.y, waypoints_[i].vel, waypoints_[i].delay);
             }
