@@ -29,8 +29,8 @@ const float L1 = 0.1f; // meters
 const float L2 = 0.2f; // meters
 const float L3 = 0.05f; //the length of leg extension
 
-const float MIN_EXT = L2-L1+L3+0.05;
-const float MAX_EXT = L2+L1+L3-0.1;
+const float MIN_EXT = L2-L1+L3+0.005;
+const float MAX_EXT = L2+L1+L3-0.01;
 
 struct MotorStatus
 {
@@ -55,6 +55,8 @@ struct LegStatus
     float l1proj;
     float length;
     float dummy;
+
+    int state_flag;
 };
 
 struct ChassisStatus

@@ -244,6 +244,8 @@ namespace control
         std::chrono::duration<double> diff = end - start_time; // duration in seconds as a double
         traveler_status_msg.time = static_cast<float>(diff.count());
 
+        traveler_status_msg.state_flag = traveler_leg_.traveler_chassis.Leg_lf.state_flag;
+
         traveler_status_publisher->publish(traveler_status_msg);
         // std::cout<< "high time: " << traveler_status_msg.time << "count: " << _count << std::endl;
         traveler_ = traveler_leg_;

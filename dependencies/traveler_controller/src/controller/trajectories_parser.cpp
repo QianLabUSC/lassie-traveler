@@ -311,6 +311,7 @@ namespace traveler_namespace
                 
                 waypoint_index_ = 0;
                 waypoint_state_ = 0;
+                state_flag_ = 0;
 
                 // create dummy prev waypoint using current leg position
                 prev_waypoint_ = Waypoint(traveler.traveler_chassis.Leg_lf.toe_position, 0.0f, 0.0f);
@@ -330,6 +331,8 @@ namespace traveler_namespace
             
             if (processWaypoint(traveler)) {
                 waypoint_index_++;
+                state_flag_ = waypoint_index_; // to let us know in the data what waypoint we are going to
+                traveler.traveler_chassis.Leg_lf.state_flag = state_flag_;
                 if (waypoint_index_ < waypoints_.size()) {
                     prev_waypoint_ = curr_waypoint_;
                     curr_waypoint_ = waypoints_[waypoint_index_];

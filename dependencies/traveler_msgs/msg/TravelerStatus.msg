@@ -1,4 +1,5 @@
 float32 time
+uint8 state_flag
 float32 toeforce_x
 float32 toeforce_y
 float32 toe_pos_x

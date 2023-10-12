@@ -394,7 +394,7 @@ class ControlNode_Leg(Node):
         self.toevelocity_y = 0
         self.theta_command = 0
         self.length_command = 0
-        self.state_flag = 0
+        self.state_flag = msg.state_flag
 
         self.position = msg.motor0_pos
         self.position1 = msg.motor1_pos
