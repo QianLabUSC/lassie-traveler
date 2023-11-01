@@ -1,9 +1,15 @@
-/*
- * @Author: Ryoma Liu, John Bush -- ROBOLAND
- * @Date: 2022-02-02 16:17:20
- * @Last Modified by: John Bush
- * @Last Modified time: 2022-10-05
- */
+/*******************************************************************************
+**  File: /include/proxy/control_data.h                                       **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
+
 
 #ifndef DATA_H_
 #define DATA_H_
@@ -15,22 +21,11 @@
 #include <cstdint>
 #include <vector>
 #include <cmath>
+#include "constants.h"
 #include "utils/traveler_utils.h"
 #include "traveler_msgs/msg/odrive_status.hpp"
 #include "traveler_msgs/msg/set_input_position.hpp"
-/**
- * The offset positions of the motors are the angles at which the motor will
- * point the control arm directly opposing the encoder's connector
-*/
-#define M0_OFFSET 4.19088   // radians
-#define M1_OFFSET 5.78053   // radians  
 
-const float L1 = 0.1f; // meters
-const float L2 = 0.2f; // meters
-const float L3 = 0.05f; //the length of leg extension
-
-const float MIN_EXT = L2-L1+L3+0.005;
-const float MAX_EXT = L2+L1+L3-0.01;
 
 struct MotorStatus
 {
@@ -59,9 +54,10 @@ struct LegStatus
     int state_flag;
 };
 
+// defines the four legs of a quadruped. We only use the default leg for now
 struct ChassisStatus
 {
-    LegStatus Leg_lf; // default
+    LegStatus Leg_lf; // default leg 
     LegStatus Leg_lb;
     LegStatus Leg_rf;
     LegStatus Leg_rb;

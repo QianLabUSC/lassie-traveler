@@ -1,9 +1,15 @@
-/*
- * @Author: Ryoma Liu -- ROBOLAND 
- * @Date: 2021-11-21 22:01:05 
- * @Last Modified by: Ryoma Liu
- * @Last Modified time: 2022-02-02 18:14:21
- */
+/*******************************************************************************
+**  File: /include/proxy/lowerproxy.h                                         **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
+
 
 #ifndef LOWERPROXY_H_
 #define LOWERPROXY_H_

@@ -309,6 +309,7 @@ namespace traveler_namespace
                 generateWaypoints(traveler);
                 clock_start_ = chrono::steady_clock::now();
                 
+                // reset state variables
                 waypoint_index_ = 0;
                 waypoint_state_ = 0;
                 state_flag_ = 0;
@@ -742,7 +743,7 @@ namespace traveler_namespace
                 GTP_first_iteration = true;
                 traverseParams.run = true;
                 run_ = true;
-                state_flag = 0;
+                state_flag_ = 0;
                 Pene_state = 0;
                 WT_state = 0;
                 ps.first_iteration = true;

@@ -1,3 +1,15 @@
+/*******************************************************************************
+**  File: /include/controller/inverse_kinematics.h                            **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
+
 #ifndef INVERSE_KINEMATICS_H
 #define INVERSE_KINEMATICS_H
 
@@ -11,18 +23,60 @@
 #include <cmath>
 #include <iostream>
 
-#include "../proxy/control_data.h"
+#include "proxy/control_data.h"
 
+
+/**
+ * @brief Calculates the gamma angle of the leg (the separation from the upper linkage to the centerline)
+ * 
+ * @param L leg length
+ * @param gamma reference to gamma angle
+ */
 void getGamma(float L, float& gamma);
 
+/**
+ * @brief Finds the L, theta, and gamma for the leg at a given cartesian toe coordinate
+ * 
+ * @param X input cartesian X coordinate (meters)
+ * @param Y input cartesian Y coordinate (meters)
+ * @param L reference to leg length (meters)
+ * @param theta reference to leg angle (radians)
+ * @param gamma reference to leg separation angle (radians)
+ */
 void physicalToAbstract(float X, float Y, float& L, float& theta, float& gamma);
+
+/**
+ * @brief Finds the L, theta, and gamma for the leg at a given cartesian toe coordinate
+ *          Also provides the option to clamp the leg length to be within the workspace
+ * 
+ * @param X input cartesian X coordinate (meters)
+ * @param Y input cartesian Y coordinate (meters)
+ * @param theta leg angle reference (radians)
+ * @param gamma leg separation angle reference (radians)
+ * @param clamp boolean (default = false) to clamp leg length to be within workspace
+ */
 void physicalToAbstract(float X, float Y, float &theta, float &gamma, bool clamp = false);
-void PhysicalToAbstractWithExtension(float X, float Y, float &theta, float &gamma);
 
+
+/**
+ * @brief Finds the cartesian toe coordinates given a leg length and leg angle
+ * 
+ * @param L 
+ * @param Theta 
+ * @param x leg toe x coordinate (meters)
+ * @param y leg toe y coordinate (meters)
+ */
 void abstractToPhysical(float L, float Theta, float& x, float& y);
+
+
+/**
+ * @brief Finds the cartesian toe coordinates given a leg length and leg angle
+ * 
+ * @param L 
+ * @param Theta 
+ * @param point leg toe (x,y) coordinate (meters)
+ */
 void abstractToPhysical(float L, float Theta, XY_pair &point);
-
-
 
 /**
  * @brief Defines positions along line defined by

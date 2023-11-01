@@ -1,3 +1,26 @@
+/*******************************************************************************
+**  File: /src/controller/Inverse_kinematics.cpp                              **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
+/*******************************************************************************
+**  File: /src/controller/Inverse_kinematics.cpp                              **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
+
 #include "controller/inverse_kinematics.h"
 
 using namespace std;
@@ -6,34 +29,11 @@ using namespace std;
 #define CONTROL_FREQ 100    // Hz
 
 
-/**
- * ! Leg Workspace:
- * Gamma must be within [0.087, 2.61] radians
- * Theta must be within [-2.47, +2.47] radians
- */
-
-
-/**
- * @brief Converts Abstract leg position into Theta, Gamma values
- *
- * @param L Leg length
- * @param Theta Abstract leg angle
- * @return Pair (Theta, Gamma) representing the motor separation
- *             for the given input parameters. Also called the Diff Angle
- */
 void getGamma(float L, float &gamma)
 {
-    gamma = static_cast<float>(acosf((pow(L - L3, 2) + L1 * L1 - L2 * L2) / (2 * L1 * (L - L3))));
+    gamma = static_cast<float>(acosf((pow(L - L3, 2) + (L1 * L1) - (L2 * L2)) / (2 * L1 * (L - L3))));
 }
 
-/**
- * @brief Finds the Leg length, angle, and motor separation for a given X, Y toe point
- *
- * @param X Toe X position
- * @param Y Toe Y position
- *
- * @return Returns <Length, Angle, Gamma>
- */
 void physicalToAbstract(float X, float Y, float &L, float &theta, float &gamma)
 {
     L = sqrt(X*X + Y*Y);
@@ -54,14 +54,6 @@ void physicalToAbstract(float X, float Y, float &L, float &theta, float &gamma)
     gamma = static_cast<float>(acosf((pow(L - L3, 2) + L1 * L1 - L2 * L2) / (2 * L1 * (L - L3))));
 }
 
-/**
- * @brief Finds the Leg angle and motor separation for a given X, Y toe point
- *
- * @param X Toe X position
- * @param Y Toe Y position
- *
- * @return Returns <Theta, Gamma>
- */
 void physicalToAbstract(float X, float Y, float &theta, float &gamma, bool clamp)
 {
     float L = sqrt(X*X + Y*Y);
@@ -85,18 +77,8 @@ void physicalToAbstract(float X, float Y, float &theta, float &gamma, bool clamp
     }
     gamma = static_cast<float>(acosf((pow(L - L3, 2) + L1 * L1 - L2 * L2) / (2 * L1 * (L - L3))));
     
-    // printf("X: %f, Y: %f, L: %f, theta: %f, gamma: %f\n", X, Y, L, theta, gamma);
-
 }
 
-/**
- * @brief Finds the physical (X, Y) position of the toe for a given L and Theta
- *
- * @param L Leg length
- * @param Theta Abstract leg angle
- * @return Pair (X, Y) representing the position of the toe in relation to
- *              the Origin (the hip joint)
- */
 void abstractToPhysical(float L, float Theta, float &x, float &y)
 {
     // check consistency for this
@@ -178,8 +160,6 @@ bool linearTraj(float t_rel, float vel, XY_pair A, XY_pair B, XY_pair ToeXY, flo
     }
 }
 
-
-
 bool validPath(XY_pair A, XY_pair B) {
     float a = A.y - B.y;
     float b = B.x - A.x;
@@ -221,6 +201,7 @@ bool clamp_XY(float &x, float &y, float L) {
     if (L == 0.0f) { 
         L = sqrtf(x*x + y*y);
     } 
+    // if the point (x,y) is out of bounds, clamp it to the edge of the workspace
     if (L > (MAX_EXT)) {
         x = (MAX_EXT) * x / L;
         y = (MAX_EXT) * y / L;
@@ -230,7 +211,7 @@ bool clamp_XY(float &x, float &y, float L) {
         y = (MIN_EXT) * y / L;
         return false;
     } else {
-        return true;
+        return true; // no change. point is in bounds
     }
 }
 
@@ -254,7 +235,7 @@ bool clamp_XY(XY_pair &P, float L) {
         P.y = y;
         return false;
     } else {
-        return true;
+        return true; // no change. point is in bounds
     }
 }
 

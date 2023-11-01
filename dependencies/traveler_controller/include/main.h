@@ -17,23 +17,8 @@
 #include "proxy/control_data.h"
 #include "can_driver/can_driver.hpp"
 
-//#include <Eigen/Dense>
-//#include <qpOASES.hpp>
-//#include <glog/logging.h>
-// #include "wbInterface.h"
-// #include "optimaize.h"
-// #include "locomotion_header.h"
-// #include "gait_math.h"
-// #include "adrc.h"
-// #include "convexMPC_interface.h"
-// #include "common_types.h"
-// #include "SolverMPC.h"
-// #include "cppTypes.h"
 
-
-// using namespace Eigen;
 using namespace std;
-// using namespace qpOASES;
 
 using traveler_namespace::control::lowerproxy;
 using traveler_namespace::control::upperproxy;

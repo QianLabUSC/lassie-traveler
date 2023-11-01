@@ -1,3 +1,15 @@
+/*******************************************************************************
+**  File: /include/utils/traveler_utils.h                                     **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
+
 #pragma once
 
 #include <cmath>
@@ -15,6 +27,14 @@ struct XY_pair{
     } 
 };
 
+/**
+ * @brief Defines the Waypoint Structure used for Waypoint-based trajectories
+ * 
+ * @param point -> (x,y) position of the waypoint (goal)
+ * @param vel   -> velocity to be used to reach the waypoint
+ * @param delay -> delay to be used before moving to the next waypoint (defaults to zero)
+ * 
+ */
 struct Waypoint {
     XY_pair point;
     float vel;
@@ -25,12 +45,12 @@ struct Waypoint {
         vel = 0.0f;
         delay = 0.0f;
     }
-    Waypoint(XY_pair point_, float vel_, float delay_) {
+    Waypoint(XY_pair point_, float vel_, float delay_ = 0.0f) {
         point = point_;
         vel = vel_;
         delay = delay_;
     }
-    Waypoint(float x_, float y_, float vel_, float delay_) {
+    Waypoint(float x_, float y_, float vel_, float delay_ = 0.0f) {
         point = XY_pair(x_, y_);
         vel = vel_;
         delay = delay_;
@@ -46,9 +66,3 @@ struct Point_Pair {
     XY_pair A;
     XY_pair B;
 };
-
-
-// // Prints roots of quadratic equation ax*2 + bx + x
-// XY_pair findRoots(float a, float b, float c);
-
-// Point_Pair findCircleIntercepts(XY_pair xvals, float m, float b);

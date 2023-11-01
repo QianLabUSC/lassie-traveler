@@ -1,3 +1,15 @@
+/*******************************************************************************
+**  File: /include/controller/trajectories_parser.h                           **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
+
 #ifndef TRAJECTRIES_PARSER_
 #define TRAJECTRIES_PARSER_
 
