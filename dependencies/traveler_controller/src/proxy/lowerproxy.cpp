@@ -1,3 +1,14 @@
+/*******************************************************************************
+**  File: /src/proxy/lowerproxy.cpp                                           **
+**  Project: traveler-high-controller                                         **
+**  Created Date: Wednesday, October 11th 2023                                **
+**  Author: John Bush (johncbus@usc.edu)                                      **
+**  -----                                                                     **
+**  Last Modified: Wed Nov 01 2023                                            **
+**  Modified By: John Bush                                                    **
+**  -----                                                                     **
+**  Copyright (c) 2023 RoboLAND                                               **
+*******************************************************************************/
 /*
  * @Author: Ryoma Liu -- ROBOLAND
  * @Date: 2021-11-21 21:58:00
@@ -28,14 +39,8 @@ namespace control
 
     lowerproxy::lowerproxy(std::string name) : Node(name)
     {
-        std::cout << "Traveler Lower Proxy established"
-                    << std::endl;
+        std::cout << "Traveler Lower Proxy established" << std::endl;
         // create a list of low level velocity command publisher
-        // joint0_publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>("/joint0_position_controller/commands", 10);
-        // joint1_publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>("/joint1_position_controller/commands", 10);
-        // joint0_speed_publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>("/joint0_velocity_controller/commands", 10);
-        // joint1_speed_publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>("/joint0_velocity_controller/commands", 10);
-        // controller_state_publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>("/travelerstate", 10);
         Position_publisher_channel_0 = this->create_publisher<traveler_msgs::msg::SetInputPosition>("/odrivepos0" , 3000);
         Position_publisher_channel_1 = this->create_publisher<traveler_msgs::msg::SetInputPosition>("/odrivepos1" , 3000);
         traveler_status_publisher = this->create_publisher<traveler_msgs::msg::TravelerStatus>("/traveler/status", 3000);
@@ -194,7 +199,7 @@ namespace control
         traveler_leg_.traveler_chassis.Leg_lf.toe_position.y = leg_length_ * cos(theta_);
     }
 
-    void lowerproxy::UpdateJoystickStatus(Traveler& traveler_)
+    void lowerproxy::UpdateRobotStatus(Traveler& traveler_)
     {
 
         // instead of reading message from ros2, directly call the function 
@@ -207,11 +212,6 @@ namespace control
         auto odrive0 = traveler_leg_.traveler_chassis.Leg_lf.axis0.odrive_status;
         auto odrive1 = traveler_leg_.traveler_chassis.Leg_lf.axis1.odrive_status;
         
-
-        // clamp the position estimate from [0, 2pi]
-        // pos_estimate_rad = fmodf_0_2pi(pos_estimate_rad);
-    
-      
         traveler_leg_.traveler_chassis.Leg_lf.axis0.effort = odrive0.iq_measured * TORQUE_CONST;
         traveler_leg_.traveler_chassis.Leg_lf.axis0.position = 
             -1.0f * (odrive0.pos_estimate) * 2 * M_PI + M0_OFFSET + (M_PI/2);
@@ -250,56 +250,7 @@ namespace control
         // std::cout<< "high time: " << traveler_status_msg.time << "count: " << _count << std::endl;
         traveler_ = traveler_leg_;
         // }
-
-
-
-        // printf("LOWERPROXY:: Motors: [%4.2f, %4.2f]   Toe: [%4.2f, %4.2f]\n", 
-        //         traveler_leg_.traveler_chassis.Leg_lf.axis0.position,
-        //         traveler_leg_.traveler_chassis.Leg_lf.axis1.position,
-        //         traveler_leg_.traveler_chassis.Leg_lf.toe_position.x,
-        //         traveler_leg_.traveler_chassis.Leg_lf.toe_position.y);
-        // printf("LOWERPROXY:: Theta: %4.2f, Gamma: %4.2f, L: %4.2f\n\n",
-        //         theta_, gamma_, leg_length_);
-        // printf("LOWERPROXY:: Toe Force: [%4.2f, %4.2f]\n",
-        //         traveler_leg_.traveler_chassis.Leg_lf.toe_force.x,
-        //         traveler_leg_.traveler_chassis.Leg_lf.toe_force.y);
-
     }
-
-    
-
-    //  void lowerproxy::PublishControlCommand(Traveler &traveler_)
-    // {
-    //     _count = _count + 0.01;
-    //     auto message = std_msgs::msg::Float64MultiArray();
-        
-    //     message.data.push_back(traveler_.traveler_control.Leg_lf.axis0.motor_control_position);
-    //     auto message2 = std_msgs::msg::Float64MultiArray();
-    //     message2.data.push_back(traveler_.traveler_control.Leg_lf.axis1.motor_control_position);
-    //     auto message3 = std_msgs::msg::Float64MultiArray();
-    //     message3.data.push_back(traveler_.traveler_chassis.Leg_lf.toe_force.x);
-    //     message3.data.push_back(traveler_.traveler_chassis.Leg_lf.toe_force.y);
-    //     message3.data.push_back(traveler_.traveler_chassis.Leg_lf.toe_position.x);
-    //     message3.data.push_back(traveler_.traveler_chassis.Leg_lf.toe_position.y);
-    //     message3.data.push_back(traveler_.traveler_chassis.Leg_lf.toe_velocity.x);
-    //     message3.data.push_back(traveler_.traveler_chassis.Leg_lf.toe_velocity.y);
-    //     message3.data.push_back(traveler_.traveler_control.Leg_lf.theta_command);
-    //     message3.data.push_back(traveler_.traveler_control.Leg_lf.length_command);
-    //     message3.data.push_back(traveler_.traveler_control.Leg_lf.state_flag);
-
-    //     joint0_publisher->publish(message);
-    //     joint1_publisher->publish(message2);
-    //     controller_state_publisher->publish(message3);
-
-    // } 
-
-    // void lowerproxy::PublishSpeedCommand(Traveler &traveler_)
-    // {
-    //     auto message = std_msgs::msg::Float64MultiArray();
-    //     message.data.push_back(traveler_.traveler_control.Leg_lf.axis0.motor_control_speed);
-    //     joint0_speed_publisher->publish(message);
-
-    // }
 
     void lowerproxy::Estop()
     {

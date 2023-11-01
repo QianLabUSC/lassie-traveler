@@ -28,7 +28,7 @@ namespace control{
             static TrajectoriesParser singleton;
             return singleton;
         }
-        void init();
+        void init(Traveler &);
         void generateTempTraj(Traveler &);
         void generateTempSpeed(Traveler &);
 
@@ -65,13 +65,6 @@ namespace control{
         void traverseWorkspace(Traveler &, WorkspaceTraversalParams &params);
 
         /**
-         * @brief Commands a leg penetration at desired angle, depth, and velocity
-         *
-         * @returns True-> complete, false-> not complete
-         */
-        bool penetrate(Traveler &);
-
-        /**
          * @brief Commands a leg to find the ground height
          *
          * @returns True-> complete, false-> not complete
@@ -106,13 +99,6 @@ namespace control{
          *          from a consistant, known, valid position.
         */
         bool homing(Traveler &);
-
-        /**
-         * @brief Commands a penetration and shear movement
-         *
-         * @returns True-> complete, false-> not complete
-         */
-        bool penetrateAndShearRoutine(Traveler &);
 
         /**
          * @brief Moves leg to Goal point at 5cm/s.

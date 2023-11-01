@@ -9,17 +9,6 @@
 **  -----                                                                     **
 **  Copyright (c) 2023 RoboLAND                                               **
 *******************************************************************************/
-/*******************************************************************************
-**  File: /src/controller/Inverse_kinematics.cpp                              **
-**  Project: traveler-high-controller                                         **
-**  Created Date: Wednesday, October 11th 2023                                **
-**  Author: John Bush (johncbus@usc.edu)                                      **
-**  -----                                                                     **
-**  Last Modified: Wed Nov 01 2023                                            **
-**  Modified By: John Bush                                                    **
-**  -----                                                                     **
-**  Copyright (c) 2023 RoboLAND                                               **
-*******************************************************************************/
 
 #include "controller/inverse_kinematics.h"
 

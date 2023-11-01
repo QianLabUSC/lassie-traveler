@@ -53,7 +53,7 @@ namespace control{
 		void getToeVelocity();
 		void getToeForce();
 		void Estop();
-		void UpdateJoystickStatus(Traveler &);
+		void UpdateRobotStatus(Traveler &);
 		//void send_request(Traveler &);
 		void calculate_position(Traveler &);
 
