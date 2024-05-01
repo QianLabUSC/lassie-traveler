@@ -89,8 +89,11 @@ def plot_penetration(filename, ax):
     # print('idx: ', idx)
 
     print('len of pos_y: ', len(y_pos_))
-    
-    y_pos_ = y_pos_[i_start:] - y_pos_[i_start]
+    # 
+    # ground_pos = data['groundHeight'] + y_pos_[i_start]
+    # y_pos_ = y_pos_[i_start:] - y_pos_[i_start]
+
+    y_pos_ = y_pos_[i_start:]
 
     # find the corresponding force range
     penetration_ = data['force_y'][i_start:end_i]
@@ -99,12 +102,12 @@ def plot_penetration(filename, ax):
     y_pos, penetration_force = trim_data(y_pos_, penetration_) 
 
     force_max, force_min, smooth_pos, smooth_force, average_force = minmax_finder(y_pos, penetration_force)
-
+    # ax.plot([ground_pos, ground_pos], [np.min(penetration_force), np.max(penetration_force)], label="ground")
     ax.plot(y_pos, penetration_force, '-', label="Raw Force", linewidth=2)
-    ax.plot(smooth_pos[force_min], smooth_force[force_min], "v", label="Local Minima", markersize=10, markerfacecolor='r')
-    ax.plot(smooth_pos[force_max], smooth_force[force_max], "^", label="Local Maxima", markersize=10, markerfacecolor='g')
+    # ax.plot(smooth_pos[force_min], smooth_force[force_min], "v", label="Local Minima", markersize=10, markerfacecolor='r')
+    # ax.plot(smooth_pos[force_max], smooth_force[force_max], "^", label="Local Maxima", markersize=10, markerfacecolor='g')
 
-    evaluation_function(ax, force_max, force_min, smooth_pos, smooth_force)
+    # evaluation_function(ax, force_max, force_min, smooth_pos, smooth_force)
 
 
     ax.set_xlabel('Vertical Depth (meters)', fontsize=18)
@@ -151,10 +154,10 @@ def plot_shear(filename, ax):
     TF_max, TF_min, smooth_pos, smooth_force, average_force = minmax_finder(x_pos, shear_force)
 
     ax.plot(x_pos, shear_force, '-', label="Raw Force", linewidth=2)
-    ax.plot(smooth_pos[TF_min], smooth_force[TF_min], "v", label="Local Minima", markersize=10, markerfacecolor='r')
-    ax.plot(smooth_pos[TF_max], smooth_force[TF_max], "^", label="Local Maxima", markersize=10, markerfacecolor='g')
+    # ax.plot(smooth_pos[TF_min], smooth_force[TF_min], "v", label="Local Minima", markersize=10, markerfacecolor='r')
+    # ax.plot(smooth_pos[TF_max], smooth_force[TF_max], "^", label="Local Maxima", markersize=10, markerfacecolor='g')
 
-    evaluation_function(ax, TF_max, TF_min, smooth_pos, smooth_force, average_force)
+    # evaluation_function(ax, TF_max, TF_min, smooth_pos, smooth_force, average_force)
 
     ax.set_xlabel('Horizontal Position (meters)', fontsize=18)
     ax.set_ylabel('Shear Force (N)', fontsize=18)

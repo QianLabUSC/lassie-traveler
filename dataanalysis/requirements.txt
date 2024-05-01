@@ -2,3 +2,4 @@ matplotlib
 numpy
 pandas
 scipy
+conda install -c conda-forge python-kaleido

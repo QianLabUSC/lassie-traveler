@@ -1,11 +1,14 @@
 from crustProperties import *
+from demo_visualization import *
 
-import numpy as np
-import matplotlib.pyplot as plt
 import csv
 import time
 import rclpy
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
 from rclpy.node import Node
 from std_msgs.msg import Float32
 from control_msgs.msg import DynamicJointState
@@ -20,7 +23,7 @@ rclpy.init()
 
 
 class ControlNode_Leg(Node):
-    def __init__(self):
+    def __init__(self, demo_mode=False):
         super().__init__('control_node')
         self.id = "leg"
         self.publisher_ = self.create_publisher(
@@ -115,8 +118,8 @@ class ControlNode_Leg(Node):
         self.fpy = None
         self.fpxl = None
         self.fpyl = None
-        self.fp = None
-        self.fig4 = None
+        self.ax1 = None
+        self.fig1 = None
         self.fig5 = None
         self.fig6 = None
         self.speed_px = None
@@ -125,23 +128,23 @@ class ControlNode_Leg(Node):
         self.ppp = None
         self.pp = None
 
-        self.fig4, self.fp = plt.subplots()
+        # create the array and axis for the force plot
+        self.fig1, self.ax1 = plt.subplots()
 
-        self.fp.set_title('Force Measurements vs Distance', fontsize=10)
-        self.fp.set_xlabel('Distance(t)', fontsize=10)
-        self.fp.set_ylabel('Force(N)', fontsize=10)
-        self.fp.grid(True)
-        self.fpx, = self.fp.plot([], [], 'r', linewidth=3)
-        self.fpy, = self.fp.plot([], [], 'g', linewidth=3)
-        self.fpxl, = self.fp.plot([], [], 'b', linewidth=3)
-        self.fpyl, = self.fp.plot([], [], 'y', linewidth=3)
-        self.crust_1, = self.fp.plot([], [])
-        self.crust_2, = self.fp.plot([], [])
-        self.crust_3, = self.fp.plot([], [], marker="o")
-        self.crust_4, = self.fp.plot([], [], marker="o")
-        self.crust_warning = self.fp.annotate(
+        self.ax1.set_title('Force Measurements vs Distance', fontsize=10)
+        self.ax1.set_xlabel('Distance(t)', fontsize=10)
+        self.ax1.set_ylabel('Force(N)', fontsize=10)
+        self.ax1.grid(True)
+        # make the plot fill GUI space
+        self.fig1.subplots_adjust(left=0.1, right=0.95, top=0.95, bottom=0.1)
+        self.fpx, = self.ax1.plot([], [], 'r', linewidth=2)
+        self.fpy, = self.ax1.plot([], [], 'g', linewidth=2)
+        self.fpxl, = self.ax1.plot([], [], 'b', linewidth=2)
+        self.fpyl, = self.ax1.plot([], [], 'y', linewidth=2)
+        
+        self.crust_warning = self.ax1.annotate(
             '', xy=(0.05, 0.95), xycoords='axes fraction')
-        self.fp.legend(['x', 'y'])
+        self.ax1.legend(['x', 'y'])
         self.fig5, self.speed_p = plt.subplots()
         self.speed_p.set_title('Speed vs time', fontsize=10)
         self.speed_p.set_xlabel('Time(t)', fontsize=10)
@@ -157,9 +160,30 @@ class ControlNode_Leg(Node):
         self.pp.grid(True)
         self.ppp, = self.pp.plot([], [], 'r', linewidth=3)
 
-    # def calibrate_loadcell(self):
-    #     self.loadcell1 = loadcell()
-    #     self.loadcell1.setup()
+        ############################################################
+        # variables for the demo mode
+        self.demo_mode = demo_mode
+        if self.demo_mode:
+            self.demo_visualizer = DemoVisualization(show_file_dialog=False)
+            self.demo_mode_counter = 0
+            self.demo_mode_counter_max = 3
+            self.demo_plots = []
+            self.most_recent_file = None
+
+            # Choose a colormap
+            cmap = cm.get_cmap('viridis')
+            # Generate n equally spaced values from 0 to 1
+            colors = np.linspace(0, 1, self.demo_mode_counter_max)
+
+            for i, color in enumerate(colors):
+                self.fpx, = self.ax1.plot([], [], color=cmap(color), linewidth=2, label=f'Plot {i+1}')
+                self.demo_plots.append(self.fpx)
+
+            self.ax1.set_title('Force Measurements vs Depth', fontsize=10)
+            self.ax1.set_xlabel('Depth(mm)', fontsize=10)
+            self.ax1.legend()
+        ############################################################
+
 
     def calibrate(self, drag_traj, mode):
         self.start_time = time.time()
@@ -167,52 +191,128 @@ class ControlNode_Leg(Node):
         self.variable_array = np.zeros((200000, 15))
         self.num_data_points = 0
         if (drag_traj != 1 and drag_traj != 3):
-            self.fp.set_title('Force Measurements vs Time', fontsize=10)
-            self.fp.set_xlabel('Time(t)', fontsize=10)
+            self.ax1.set_title('Force Measurements vs Time', fontsize=10)
+            self.ax1.set_xlabel('Time(t)', fontsize=10)
         else:
-            self.fp.set_title('Force Measurements vs Distance', fontsize=10)
-            self.fp.set_xlabel('Distance(t)', fontsize=10)
+            self.ax1.set_title('Force Measurements vs Distance', fontsize=10)
+            self.ax1.set_xlabel('Distance(t)', fontsize=10)
         if (mode == 3):
-            self.fp.legend(['x', 'y', 'x-loadcell', 'y-loadcell'])
+            self.ax1.legend(['x', 'y', 'x-loadcell', 'y-loadcell'])
+        elif self.demo_mode:
+            self.ax1.set_title('Force Measurements vs Depth', fontsize=10)
+            self.ax1.set_xlabel('Depth(mm)', fontsize=10)
         else:
-            self.fp.legend(['x', 'y'])
+            self.ax1.legend(['x', 'y'])
 
     def get_fp(self):
-        return self.fp
+        return self.ax1
 
     def get_pp(self):
         return self.pp
 
     def get_speed_p(self):
         return self.speed_p
+    
+    def clear_plot(self):
+        print("Clearing Plot")
+        # clear the plots and reset the counter
+        self.demo_mode_counter = 0
+
+        # Choose a colormap
+        cmap = cm.get_cmap('viridis')
+        # Generate n equally spaced values from 0 to 1
+        colors = np.linspace(0, 1, self.demo_mode_counter_max)
+
+        for plot in self.demo_plots:
+            plot.set_xdata([])
+            plot.set_ydata([])
+
+        self.ax1.clear()
+
+        # reinitialize the plot lines
+        for i, color in enumerate(colors):
+            self.fpx, = self.ax1.plot([], [], color=cmap(color), linewidth=2, label=f'Plot {i+1}')
+            self.demo_plots[i] = self.fpx
+
+        self.ax1.set_title('Force Measurements vs Depth', fontsize=10)
+        self.ax1.set_xlabel('Depth(mm)', fontsize=10)
+        self.ax1.set_ylabel('Force(N)', fontsize=10)
+        self.ax1.grid(True)
+        self.ax1.legend()
+        self.ax1.relim()
+        self.ax1.autoscale_view()
+        self.fig1.canvas.draw()
+        self.fig1.canvas.flush_events()
+
+    # perform the full analysis on the data
+    def demo_analysis(self):
+        print("Running Demo Analysis...")
+        # on the current demo_mode_counter plot, replace the data with the full recorded set
+        if self.demo_visualizer.external_plot(filename=self.most_recent_file, ax=self.ax1, plot_object=self.demo_plots[self.demo_mode_counter]):
+            self.ax1.relim()
+            self.ax1.autoscale_view()
+            self.ax1.legend()
+            self.fig1.canvas.draw()
+            self.fig1.canvas.flush_events()
+            
+            self.demo_mode_counter += 1
+        else:
+            print("Error in analysis!")
+
 
     def update_plot(self, drag_traj, mode, ground_height):
-        # print(ground_height)
+        '''
+        This function updates the force plot in real time
+
+        If we are in demo mode, we will only show the force vs depth data
+        where the following conditions are met:
+        - drag_traj == 1
+        - state flag == 1
+        - depth (-ground_height - toeposition_y) < 0.05
+        '''
+        
         index = np.linspace(0, self.num_data_points, self.num_data_points)
         self.time_list = self.variable_array[0:self.num_data_points-1, 0]
         self.force_list_x = self.variable_array[0:self.num_data_points-1, 1]
         self.force_list_y = self.variable_array[0:self.num_data_points-1, 2]
         self.force_list_loadcell_x = self.variable_array[0:self.num_data_points-1, 3]
         self.force_list_loadcell_y = self.variable_array[0:self.num_data_points-1, 4]
-        self.toeposition_x_list = self.variable_array[0:self.num_data_points-1, 5]
-        self.toeposition_y_list = self.variable_array[0:self.num_data_points-1, 6]
+        self.toeposition_x_list = self.variable_array[0:self.num_data_points-1, 3]
+        self.toeposition_y_list = self.variable_array[0:self.num_data_points-1, 4]
         self.toevelocity_x_list = self.variable_array[0:self.num_data_points-1, 7]
         self.toevelocity_y_list = self.variable_array[0:self.num_data_points-1, 8]
+        self.state_flag_list = self.variable_array[0:self.num_data_points-1, 13]
+
+        force_copy = self.force_list_y
+        negated_force_y = -1 * np.array(force_copy)
 
         # mode 3 is for field trip, in this case we need to plot the data when leg
         # penetrate into the terrain
+        
 
         if (drag_traj == 1):
-            depth = -ground_height - np.array(self.toeposition_y_list)
-            index = np.where(depth > 0)[0]
-
-            depth = depth[index]
-            # print('depth:', depth)
-            assert (len(depth) == len(self.force_list_x[index]))
-            self.fpx.set_xdata(depth)
-            self.fpx.set_ydata(self.force_list_x[index])
-            self.fpy.set_xdata(depth)
-            self.fpy.set_ydata(self.force_list_y[index])
+            depth = -1 * np.array(self.toeposition_y_list) - ground_height
+            
+            if (self.demo_mode and self.demo_mode_counter < self.demo_mode_counter_max):
+                index = np.where((self.state_flag_list == 1) & (depth > -0.005))[0]
+                # index = np.where((depth > -0.05))[0]
+                depth = depth[index]
+                force = negated_force_y[index]
+                depth *= 1000 # convert to mm
+                # # print('depth:', depth)'
+                assert (len(depth) == len(force))
+                assert (len(depth) == len(self.force_list_y[index]))
+                self.demo_plots[self.demo_mode_counter].set_xdata(depth)
+                self.demo_plots[self.demo_mode_counter].set_ydata(force)
+            else:
+                index = np.where(depth < 0)[0]
+                depth = depth[index]
+                # # print('depth:', depth)
+                assert (len(depth) == len(self.force_list_x[index]))
+                self.fpx.set_xdata(self.time_list)
+                self.fpx.set_ydata(self.force_list_x)
+                self.fpy.set_xdata(self.time_list)
+                self.fpy.set_ydata(self.force_list_y)
             if (mode == 3):
                 self.fpxl.set_xdata(depth)
                 self.fpxl.set_ydata(self.force_list_loadcell_x[index])
@@ -221,75 +321,39 @@ class ControlNode_Leg(Node):
             # if penetrate, show the crust features in a real time mode
             if (mode == 0):
                 pass
-                # try:
-                #     (crustStiffness, yieldDepth,
-                #      yieldForce, ultimateDepth,
-                #      ultimateForce, basinDepth,
-                #      basinForce, sandStiffness,
-                #      sandIntercept, depth_sand_linear,
-                #      sandInterceptY) = crust_properties(- np.array(self.toeposition_y_list),
-                #                                         np.array(
-                #                                             self.force_list_y),
-                #                                         ground_height,
-                #                                         1)
-                #     # print(crustStiffness)
-                #     self.crust_1.set_xdata([0, ultimateDepth])
-                #     self.crust_1.set_ydata([0, crustStiffness*ultimateDepth])
-                #     self.crust_2.set_xdata([ultimateDepth])
-                #     self.crust_2.set_ydata([ultimateForce])
-                #     self.crust_3.set_xdata([basinDepth])
-                #     self.crust_3.set_ydata([basinForce])
-                #     depth_end = depth[-1]
-                #     self.crust_4.set_xdata([depth_sand_linear, depth_end])
-                #     self.crust_4.set_ydata(
-                #         [sandStiffness*depth_sand_linear, sandStiffness*depth_end]+sandInterceptY)
-                #     # self.crust_warning.set_text("detecting crust feature failed")
-                # except:
-                #     self.crust_warning.set_text(
-                #         "detecting crust feature failed")
-        elif (drag_traj == 3):
-            y_index = np.where(
-                np.array(self.toeposition_y_list) < -ground_height)[0]
-            index = np.where(np.array(self.toeposition_x_list) > 0.001)[0]
-            index = np.intersect1d(y_index, index)
-
-            self.fpx.set_xdata(np.array(self.toeposition_x_list[index]))
-            self.fpx.set_ydata(self.force_list_x[index])
-            self.fpy.set_xdata(np.array(self.toeposition_x_list[index]))
-            self.fpy.set_ydata(self.force_list_y[index])
-            if (mode == 3):
-                self.fpxl.set_xdata(np.array(self.toeposition_x_list[index]))
-                self.fpxl.set_ydata(self.force_list_loadcell_x[index])
-                self.fpyl.set_xdata(np.array(self.toeposition_x_list[index]))
-                self.fpyl.set_ydata(self.force_list_loadcell_y[index])
-
-        else:
-            self.fpx.set_xdata(self.time_list)
-            self.fpx.set_ydata(self.force_list_x)
-            self.fpy.set_xdata(self.time_list)
-            self.fpy.set_ydata(self.force_list_y)
+                
+        else: # force plotting for free move and detect ground
+            # plot nothing...
+            pass
+            # this code plots the raw x and y force vs time
+            # self.fpx.set_xdata(self.time_list)
+            # self.fpx.set_ydata(self.force_list_x)
+            # self.fpy.set_xdata(self.time_list)
+            # self.fpy.set_ydata(self.force_list_y)
         # # print(self.time_list, self.force_list_x)
         if ((len(index)) > 0):
-            self.fp.relim()
-            self.fp.autoscale_view()
-            self.fig4.canvas.draw()
-            self.fig4.canvas.flush_events()
+            self.ax1.relim()
+            self.ax1.autoscale_view()
+            self.fig1.canvas.draw()
+            self.fig1.canvas.flush_events()
 
-        self.speed_px.set_xdata(self.time_list)
-        self.speed_px.set_ydata(self.toevelocity_x_list)
-        self.speed_py.set_xdata(self.time_list)
-        self.speed_py.set_ydata(self.toevelocity_y_list)
-        self.speed_p.relim()
-        self.speed_p.autoscale_view()
-        self.fig5.canvas.draw()
-        self.fig5.canvas.flush_events()
+        # ! The Speed and Position Plots have issues
+        if not self.demo_mode:
+            self.speed_px.set_xdata(self.time_list)
+            self.speed_px.set_ydata(self.toevelocity_x_list)
+            self.speed_py.set_xdata(self.time_list)
+            self.speed_py.set_ydata(self.toevelocity_y_list)
+            self.speed_p.relim()
+            self.speed_p.autoscale_view()
+            self.fig5.canvas.draw()
+            self.fig5.canvas.flush_events()
 
-        self.ppp.set_xdata(self.toeposition_x_list)
-        self.ppp.set_ydata(self.toeposition_y_list)
-        self.pp.relim()
-        self.pp.autoscale_view()
-        self.fig6.canvas.draw()
-        self.fig6.canvas.flush_events()
+            self.ppp.set_xdata(self.toeposition_x_list)
+            self.ppp.set_ydata(self.toeposition_y_list)
+            self.pp.relim()
+            self.pp.autoscale_view()
+            self.fig6.canvas.draw()
+            self.fig6.canvas.flush_events()
 
     def update_force_plot(self, real_time_plot_active, updateplotflag, drag_traj, mode, ground_height):
         if (real_time_plot_active and updateplotflag):
@@ -307,12 +371,12 @@ class ControlNode_Leg(Node):
 
         REC_FOLDER = "experiment_records/" 
         CURR_FOLDER = os.getcwd()
-        PARAENT_FOLDER = os.path.dirname(CURR_FOLDER)
-        COMBINED_HIGH_PATH = os.path.join(PARAENT_FOLDER, REC_FOLDER + file_name + '.csv')
+        PARENT_FOLDER = os.path.dirname(CURR_FOLDER)
+        COMBINED_HIGH_PATH = os.path.join(PARENT_FOLDER, REC_FOLDER + file_name + '.csv')
         if not os.path.exists(os.path.dirname(COMBINED_HIGH_PATH)):
             os.makedirs(os.path.dirname(COMBINED_HIGH_PATH))
 
-        
+        self.most_recent_file = COMBINED_HIGH_PATH
 
         with open(COMBINED_HIGH_PATH, 'w', newline='') as f:
             writer = csv.writer(f)

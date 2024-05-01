@@ -132,7 +132,7 @@ namespace control{
          * General State variables shared by all trajectories
          */
         bool first_iteration = false;
-        int state_flag_ = 0;
+        uint8_t state_flag_ = 0;
         std::chrono::steady_clock::time_point clock_start_; // chrono literal
         std::chrono::steady_clock::time_point clock1_start_; // chrono literal
         std::chrono::steady_clock::time_point clock2_start_; // chrono literal

@@ -7,6 +7,18 @@
 #:set color_black "000000"
 
 
+<clearplotbutton>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        TooltipMDIconButton:
+            icon: "eraser"
+            tooltip_text: "Clear Plots"
+            theme_text_color: "Custom"
+            text_color: color_deep_orange
+            user_font_size: "36sp"
+            on_press: app.clear_plot()
+            pos_hint: {'center_y': 0.5}  
+
 <extrudetab>
     MDCard:
         size_hint_x: 1
@@ -1551,7 +1563,7 @@ MDScreen:
             
         MDBottomNavigation:
             id: panel
-            height: dp(58)
+            height: dp(40)
 
             MDBottomNavigationItem:
                 name: "files_control"
@@ -1560,17 +1572,16 @@ MDScreen:
                 icon: "robot-happy-outline"
                 
 
-
                 MDGridLayout:
-                    cols: 3
+                    cols: 2
                     rows: 1
                     MDBoxLayout:
-                        spacing:20
-                        padding: 20
+                        spacing: 10
+                        padding: 10
                         orientation: "vertical"                    
                         
                         MDBoxLayout:
-                            spacing:20
+                            spacing: 10
                             size_hint_y: 0.6
                             size_hint_x: 1
                             radius: [4, ]
@@ -1579,7 +1590,7 @@ MDScreen:
 
                             MDTabs:
                                 id: datafiguretabs
-                                tab_hint_x: .5
+                                tab_hint_x: .8
                                 on_tab_switch: app.on_tab_switch(*args)
                                 
 
@@ -1599,14 +1610,12 @@ MDScreen:
                                     MDBoxLayout:
                                         id: positionplot
                                         
-
-                            
-
+# entire right side panel
                     MDBoxLayout:
-                        spacing:20
-                        padding: 20
+                        spacing: 10
+                        padding: 10
                         orientation: "vertical"     
-                        size_hint_x: 0.7               
+                        size_hint_x: 0.4              
                         
 
                         MDCard:
@@ -1627,7 +1636,7 @@ MDScreen:
                                     theme_text_color: "Custom"
                                     font_style: "H6"
                                     text_color:  color_deep_orange
-                                    text: "Trajectories Selection"
+                                    text: "Trajectory Selection"
                                     height: self.texture_size[1]
                                 MDDropDownItem:
                                     id: drop_item
@@ -1649,12 +1658,14 @@ MDScreen:
                             padding: 12
                             height: 10                           
  
-                            
+# Realtime plot and start robot buttons
                             MDBoxLayout:
+                                
                                 padding: 15
                                 spacing: 15
                                 pos_hint: {'center_x': .5, 'center_y': .2}
                                 MDBoxLayout:
+                                    id: data_collection_controls
                                     size_hint_y: 0.6
                                     size_hint_x: 0.4
                                     MDLabel:
@@ -1688,7 +1699,7 @@ MDScreen:
                                         height: dp(20)
                                         on_active: app.check_if_start()
                                 
-
+# Filename text input and download data button
                         MDCard:
                             size_hint_y: 0.1
                             size_hint_x: 1

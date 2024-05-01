@@ -742,7 +742,7 @@ namespace traveler_namespace
                 GTP_first_iteration = true;
                 traverseParams.run = true;
                 run_ = true;
-                state_flag = 0;
+                state_flag_ = 0;
                 Pene_state = 0;
                 WT_state = 0;
                 ps.first_iteration = true;

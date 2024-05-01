@@ -56,7 +56,7 @@ struct LegStatus
     float length;
     float dummy;
 
-    int state_flag;
+    uint8_t state_flag;
 };
 
 struct ChassisStatus

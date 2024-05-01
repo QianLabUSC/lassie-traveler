@@ -89,7 +89,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN echo "if [ -f /opt/ros/humble/setup.bash ]; then source /opt/ros/humble/setup.bash; fi" >> ~/.bashrc \
   && echo "if [ -f /home/install/setup.bash ]; then source /home/install/setup.bash; fi" >> ~/.bashrc \
+  && echo "export ROS_DOMAIN_ID=19" >> ~/.bashrc \
   && echo "cd /home/traveler" >> ~/.bashrc
+ 
 
 # ARG USERNAME=traveler
 # ARG USER_UID=1000

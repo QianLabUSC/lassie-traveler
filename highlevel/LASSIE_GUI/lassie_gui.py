@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import argparse
 import sys
+# capture args from command line
+args = sys.argv[1:]
+
 import csv
 import threading
 import time
@@ -10,6 +13,8 @@ import matplotlib.pyplot as plt
 from ros2_interface_leg import *
 from ros2_interface_turtle import *
 from ros2_interface_minirhex import *
+import kivy
+kivy.require('2.1.0')
 from kivy.core.window import Window
 from kivy.config import Config
 from kivy.metrics import dp
@@ -23,6 +28,9 @@ from kivymd.app import MDApp
 from kivymd.uix.card import MDCard
 from kivymd.uix.list import OneLineIconListItem
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.textfield import MDTextField
+from kivymd.uix.selectioncontrol import MDSwitch
 from kivy.uix.widget import Widget
 from kivymd.uix.tooltip import MDTooltip
 from kivymd.uix.button import MDIconButton
@@ -32,16 +40,21 @@ from logi_web_camera2_record import Recorder_2
 DEBUG = False
 
 # Initialize parser
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(
+    usage="%(prog)s [OPTION]",
+    description="Runs a GUI to Control RoboLAND Robot Platforms"
+)
 
 # Adding optional argument
 parser.add_argument("-m", "--mode", 
                     help="running scenario  0: leg for field trip\
                     , 1: turtle, 2: minirhex, 3: leg with loadcell",
                     nargs='?', const=1, type=int, default=0)
-inputargs = parser.parse_args()
+parser.add_argument('-d', '--demo', action='store_true', help='Runs a Demo Mode Visualization (under development)')
+input_args = parser.parse_args(args)
+print(input_args)
 
-sys.argv = [sys.argv[0]]
+# sys.argv = [sys.argv[0]]
 start_time = time.time()
 
 # Config.set('input', '%(name)s', '')
@@ -73,6 +86,11 @@ class IconListItem(OneLineIconListItem):
     icon = StringProperty()
 class TooltipMDIconButton(MDIconButton, MDTooltip):
     pass
+class clearplotbutton( MDBoxLayout):
+    pass
+class start_button(MDSwitch):
+    pass
+
 
 
 
@@ -229,8 +247,9 @@ class DrawCanvasWidget(Widget):
 
 class TravelerApp(MDApp):
 
-    def __init__(self, node, multi_camera=False, scale_size=1, scale_size_2=1):
+    def __init__(self, node, inputargs, multi_camera=False, scale_size=1, scale_size_2=1, demo=False):
         super().__init__()
+        self.inputargs = inputargs
         self.start_robot = False
         self.drag_traj = 1
         self.theme_cls.theme_style = "Light" 
@@ -286,8 +305,13 @@ class TravelerApp(MDApp):
             self.screen.ids.configure_layout.add_widget(self.minirhex_tab)
             self.current_tab = self.minirhex_tab
 
+        self.demo = demo
+        if (self.demo):
+            print("Creating Demo-Specific clear plot button")
+            self.clearplotbutton = clearplotbutton()
+            self.screen.ids.data_collection_controls.add_widget(self.clearplotbutton, 100)
         
-            
+        
         # # print(menu_items)
         self.screen.ids.drop_item.text = self.ros_node.tab_control[0]
         self.menu = MDDropdownMenu(
@@ -308,10 +332,51 @@ class TravelerApp(MDApp):
         # self.trajectory_design_panel_repre = DrawCanvasWidget()
         # self.screen.ids.trajectory_design_panel.add_widget(self.trajectory_design_panel_repre)
 
+        Clock.schedule_once(self.setup_keyboard_listener, 0)
 
-
+    def setup_keyboard_listener(self, dt):
+        print("Starting keyboard listener")
+        Window.bind(on_keyboard=self.on_keyboard)
+    
+    def on_keyboard(self, instance, keyboard, keycode, text, modifiers):
+        # Check if any text fields are focused
+        if self.is_mdtextfield_focused(self.root):
+            return False
+    
+        # example:
+        if text == 'd':
+            print("'d' key pressed. Switching to detect ground")
+            self.change_configure_tab('Detect Ground')
+            return True
+        if text == 's':
+            self.change_configure_tab('Penetrate and Shear')
+        if text == 'e':
+            self.change_configure_tab('Extrude')
+        if text == 'f':
+            print("f key pressed")
+            self.screen.ids.filename.focus = True
+        if text == 'r':
+            self.screen.ids.if_real_time_plot.active = not self.screen.ids.if_real_time_plot.active
+        if text == 'c' and self.demo:
+            self.clear_plot()
+        if keycode == 40:
+            print('Enter key was pressed.')
+            self.screen.ids.start_collection.active = not self.screen.ids.start_collection.active
+            # self.check_if_start()
         
+        return False
+    
+    def is_mdtextfield_focused(self, widget):
+        #Check if the widget is an MDTextField and is focused
+        if isinstance(widget, MDTextField) and widget.focus:
+            return True
         
+        # recursively check for focused MDTextField in children
+        for child in widget.children:
+            if self.is_mdtextfield_focused(child):
+                return True
+        
+        return False
 
     def change_configure_tab(self, type):
         self.set_item(type)
@@ -391,8 +456,8 @@ class TravelerApp(MDApp):
         self.errors_writer = threading.Thread(target=self.write_errors)
         self.errors_writer.daemon = True
         self.errors_writer.start()
-        # print(inputargs.mode == 3)
-        if(inputargs.mode == 3):
+        # print(self.inputargs.mode == 3)
+        if(self.inputargs.mode == 3):
             # print(3)
             self.loadcell_calibrator = threading.Thread(target=self.ros_node.calibrate_loadcell)
             self.loadcell_calibrator.daemon = True
@@ -401,15 +466,13 @@ class TravelerApp(MDApp):
 
         return self.screen
     def update_force_plot(self, *args):
-        # if(self.ros_node.id == "leg"):
-        #     if(inputargs.mode == 0):
-        #         self.ros_node.update_force_plot(False, 
-        #                                     self.updateplotflag, self.drag_traj, inputargs.mode
-        #                                     , float(round(self.ground_tab.ids.variable3_slider.value)/1000))
-        #     else:
-        #         self.ros_node.update_force_plot(self.screen.ids.if_real_time_plot.active, 
-        #                                     self.updateplotflag, self.drag_traj, inputargs.mode
-        #                                     , float(round(self.ground_tab.ids.variable3_slider.value)/1000))
+        
+        if (self.drag_traj == 1 or self.drag_traj == 3 and self.updateplotflag):
+            # print("entered update force plot guard")
+            # print(self.screen.ids.if_real_time_plot.active)
+            self.ros_node.update_force_plot(self.screen.ids.if_real_time_plot.active, 
+                                        self.updateplotflag, self.drag_traj, self.inputargs.mode
+                                        , float(round(self.ground_tab.ids.variable3_slider.value)/1000))
         # else:
         #     self.ros_node.update_force_plot(self.screen.ids.if_real_time_plot.active, 
         #                                     self.updateplotflag)
@@ -535,82 +598,122 @@ class TravelerApp(MDApp):
 
     def check_if_start(self):
         if(self.start_robot == True):
+            self.stop_trajectory()
             
-            self.start_robot = False
-            self.start_flag = False
-            self.traveler_mode = TravelerMode()
-            self.traveler_mode.start_flag = self.start_flag
-            self.traveler_mode.traveler_mode = int(self.drag_traj)
-            self.ros_node.start(self.traveler_mode)
-            print("end the traj: ", self.traveler_mode) 
-            self.updateplotflag = False
-            self.ros_node.update_force_data(False)
-            
-            # if(self.screen.ids.if_real_time_plot.active == False):
-            if(self.ros_node.id == "leg"):
-                self.ros_node.update_plot(self.drag_traj, inputargs.mode, float(round(self.ground_tab.ids.variable3_slider.value)/1000))
-            else:
-                self.ros_node.update_plot()
-            # self.stop_logi_usb_camera_recording()
-            # self.save_logi_usb_camera_recording()
-            self.on_download_data()
-            print('end to sampling -> current time: ", time.time()-self.start_time')
-            
-            
+            # custom override movement to move leg out of way after extrusion
+            if (self.drag_traj == 1):
+                self.automatic_move(170, 45)
         else:
-            print('----------------------------------logging------------------------------------')
-            self.start_time = time.time()
-            
+            self.run_trajectory()
+
+    def automatic_move(self, length, angle): # length in cm, angle in degrees
+        print("**************************************************")
+        print("************ starting automatic move *************")
+        print("**************************************************")
+
+        # store the current trajectory mode
+        curr_traj = self.drag_traj
+
+        # override mode to free move
+        self.drag_traj = 4
+
+        # override the free move parameters
+        self.free_tab.ids.variable1_slider.value = length
+        self.free_tab.ids.variable3_slider.value = angle
+
+        self.run_trajectory()
+
+        time.sleep(2)
+
+        self.stop_trajectory()
+
+        # reset the trajectory to previous
+        self.drag_traj = curr_traj
+
+    def run_trajectory(self):
+        print('----------------------------------logging------------------------------------')
+        self.start_time = time.time()
         
-            self.trial_start_time = str(time.asctime( time.localtime(time.time()) )).replace(" ", "_").replace(":","_")
-            if('/' in self.screen.ids.filename.text):
-                self.file_name = self.screen.ids.filename.text + "_"+ self.trial_start_time 
-            else:
-                self.file_name = 'MH23_Data/' + self.screen.ids.filename.text + "_"+ self.trial_start_time
-            # self.start_logi_usb_camera_recording()
-            self.ros_node.calibrate(self.drag_traj, inputargs.mode) 
-            self.updateplotflag = True
-            self.ros_node.update_force_data(True)   
-            print("start to sampling -> current time: ", time.time()-self.start_time)       
-            
-            # Set the config
-            self.traveler_config = TravelerConfig()
-            self.traveler_config.extrude_speed = float(round(self.extrude_tab.ids.extrude_speed_slider.value)) 
-            self.traveler_config.extrude_angle = float(round(self.extrude_tab.ids.extrude_angle_slider.value)) 
-            self.traveler_config.extrude_depth = float(round(self.extrude_tab.ids.extrude_length_slider.value)) 
-            self.traveler_config.shear_penetration_depth = float(round(self.shear_tab.ids.Slider_1.value)) 
-            self.traveler_config.shear_penetration_speed = float(round(self.shear_tab.ids.Slider_2.value))
-            self.traveler_config.shear_penetration_delay = float(round(self.shear_tab.ids.Slider_3.value)) 
-            self.traveler_config.shear_length = float(round(self.shear_tab.ids.Slider_4.value)) 
-            self.traveler_config.shear_speed = float(round(self.shear_tab.ids.Slider_5.value)) 
-            self.traveler_config.shear_delay = float(round(self.shear_tab.ids.Slider_6.value)) 
-            self.traveler_config.shear_return_speed = float(round(self.shear_tab.ids.Slider_7.value)) 
-            self.traveler_config.workspace_angular_speed = float(round(self.workspace_tab.ids.moving_speed_slider.value)) 
-            self.traveler_config.workspace_moving_angle = float(round(self.workspace_tab.ids.moving_step_angle_slider.value)) 
-            self.traveler_config.workspace_time_delay = float(round(self.workspace_tab.ids.time_delay_slider.value)) 
-            self.traveler_config.static_length = float(round(self.free_tab.ids.variable1_slider.value))/10 
-            self.traveler_config.static_angle = float(round(self.free_tab.ids.variable3_slider.value))   
-            self.traveler_config.search_start = float(round(self.ground_tab.ids.variable1_slider.value)/10) 
-            self.traveler_config.search_end = float(round(self.ground_tab.ids.variable2_slider.value)/10)  
-            self.traveler_config.ground_height = float(round(self.ground_tab.ids.variable3_slider.value)/10)
-            self.traveler_config.back_speed = float(round(self.extrude_tab.ids.back_speed_slider.value))
-            self.traveler_config.filename = str(self.file_name)
-           
-            self.ros_node.set_config(self.traveler_config)
-            print("set the config as: ", self.traveler_config)
-    
-            self.frame = 0
+        self.trial_start_time = str(time.asctime( time.localtime(time.time()) )).replace(" ", "_").replace(":","_")
+        if('/' in self.screen.ids.filename.text):
+            self.file_name = self.screen.ids.filename.text + "_"+ self.trial_start_time 
+        else:
+            self.file_name = 'MUD_Data/' + self.screen.ids.filename.text + "_"+ self.trial_start_time
+        # self.start_logi_usb_camera_recording()
+        self.ros_node.calibrate(self.drag_traj, self.inputargs.mode) 
+        self.updateplotflag = True
+        self.ros_node.update_force_data(True)   
+        print("start to sampling -> current time: ", time.time()-self.start_time)       
+        
+        # Set the config
+        self.traveler_config = TravelerConfig()
+        self.traveler_config.extrude_speed = float(round(self.extrude_tab.ids.extrude_speed_slider.value)) 
+        self.traveler_config.extrude_angle = float(round(self.extrude_tab.ids.extrude_angle_slider.value)) 
+        self.traveler_config.extrude_depth = float(round(self.extrude_tab.ids.extrude_length_slider.value)) 
+        self.traveler_config.shear_penetration_depth = float(round(self.shear_tab.ids.Slider_1.value)) 
+        self.traveler_config.shear_penetration_speed = float(round(self.shear_tab.ids.Slider_2.value))
+        self.traveler_config.shear_penetration_delay = float(round(self.shear_tab.ids.Slider_3.value)) 
+        self.traveler_config.shear_length = float(round(self.shear_tab.ids.Slider_4.value)) 
+        self.traveler_config.shear_speed = float(round(self.shear_tab.ids.Slider_5.value)) 
+        self.traveler_config.shear_delay = float(round(self.shear_tab.ids.Slider_6.value)) 
+        self.traveler_config.shear_return_speed = float(round(self.shear_tab.ids.Slider_7.value)) 
+        self.traveler_config.workspace_angular_speed = float(round(self.workspace_tab.ids.moving_speed_slider.value)) 
+        self.traveler_config.workspace_moving_angle = float(round(self.workspace_tab.ids.moving_step_angle_slider.value)) 
+        self.traveler_config.workspace_time_delay = float(round(self.workspace_tab.ids.time_delay_slider.value)) 
+        self.traveler_config.static_length = float(round(self.free_tab.ids.variable1_slider.value))/10 
+        self.traveler_config.static_angle = float(round(self.free_tab.ids.variable3_slider.value))   
+        self.traveler_config.search_start = float(round(self.ground_tab.ids.variable1_slider.value)/10) 
+        self.traveler_config.search_end = float(round(self.ground_tab.ids.variable2_slider.value)/10)  
+        self.traveler_config.ground_height = float(round(self.ground_tab.ids.variable3_slider.value)/10)
+        self.traveler_config.back_speed = float(round(self.extrude_tab.ids.back_speed_slider.value))
+        self.traveler_config.filename = str(self.file_name)
+        
+        self.ros_node.set_config(self.traveler_config)
+        print("set the config as: ", self.traveler_config)
 
-            self.start_robot = True
-            self.start_flag = True
-            time.sleep(0.1)
-            self.traveler_mode = TravelerMode()
-            self.traveler_mode.start_flag = self.start_flag
-            self.traveler_mode.traveler_mode = int(self.drag_traj)
-            self.ros_node.start(self.traveler_mode)
-            print("start the traj: ", self.traveler_mode)        
+        self.frame = 0
 
+        self.start_robot = True
+        self.start_flag = True
+        time.sleep(0.1)
+        self.traveler_mode = TravelerMode()
+        self.traveler_mode.start_flag = self.start_flag
+        self.traveler_mode.traveler_mode = int(self.drag_traj)
+        self.ros_node.start(self.traveler_mode)
+        print("start the traj: ", self.traveler_mode)        
 
+    def stop_trajectory(self):
+        self.start_robot = False
+        self.start_flag = False
+        self.traveler_mode = TravelerMode()
+        self.traveler_mode.start_flag = self.start_flag
+        self.traveler_mode.traveler_mode = int(self.drag_traj)
+        self.ros_node.start(self.traveler_mode)
+        print("end the traj: ", self.traveler_mode) 
+        self.updateplotflag = False
+        self.ros_node.update_force_data(False)
+        
+        # if(self.screen.ids.if_real_time_plot.active == False):
+        if(self.ros_node.id == "leg"):
+            self.ros_node.update_plot(self.drag_traj, self.inputargs.mode, float(round(self.ground_tab.ids.variable3_slider.value)/1000))
+        else:
+            self.ros_node.update_plot()
+        # self.stop_logi_usb_camera_recording()
+        # self.save_logi_usb_camera_recording()
+        self.on_download_data()
+        
+        if (self.demo and self.drag_traj == 1):
+            # have the ros node update the plot with the final data and analysis
+            self.ros_node.demo_analysis()
+        print('end to sampling -> current time: ", time.time()-self.start_time')
+
+        if (self.drag_traj == 1 or self.drag_traj == 3):
+            # call post-process script here
+            # filename is self.file_name
+            pass
+
+    def clear_plot(self):
+        self.ros_node.clear_plot()
         
     def on_download_data(self):
         if(self.drag_traj != 4 and self.drag_traj != 7):
@@ -691,7 +794,7 @@ class TravelerApp(MDApp):
 
                 
     def on_start(self):
-        
+
         try:
             path = "./config/"  +  "last_config.csv"
             with open(path) as f:
@@ -705,7 +808,7 @@ class TravelerApp(MDApp):
             
         except:
             pass
-        if(inputargs.mode == 0):
+        if(self.inputargs.mode == 0):
             self.extrude_tab.ids.extrude_speed_slider.max = 10
             self.extrude_tab.ids.back_speed_slider.max = 10
             self.shear_tab.ids.Slider_2.max = 10
@@ -737,12 +840,17 @@ class TravelerApp(MDApp):
 
 
 def main():
-    # args = parser.parse_args()
+    inputargs = input_args
+
     # test_time_start = time.time()
     print(inputargs.mode)
+    print('Demo mode: ', inputargs.demo)
     if(inputargs.mode == 0 or inputargs.mode == 3):
-        node_leg = ControlNode_Leg()
-        app = TravelerApp(node_leg, multi_camera=False, scale_size=1, scale_size_2=0.6)
+        node_leg = ControlNode_Leg(demo_mode=inputargs.demo)
+        app = TravelerApp(node_leg, multi_camera=False, scale_size=1, scale_size_2=0.6, inputargs=inputargs, demo=inputargs.demo)
+        if (inputargs.demo):
+            print("Running GUI in Demo Mode")
+            
     elif(inputargs.mode == 1):
         node_turtle = ControlNode_Turtle()
         app = TravelerApp(node_turtle, multi_camera=True, scale_size=0.9, scale_size_2=0.6)
@@ -761,4 +869,9 @@ def main():
 
 
 if __name__ == '__main__':
+    # parser = argparse.ArgumentParser()
+    # args = parser.parse_args()
+
+    
+
     main()
