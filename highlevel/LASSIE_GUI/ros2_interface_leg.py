@@ -37,6 +37,8 @@ class ControlNode_Leg(Node):
             3000
         )
 
+        print("Created Subscriptions")
+
         # self.linear_subscription = self.create_subscription(
         #     DynamicJointState,
         #     '/dynamic_joint_states',
@@ -381,9 +383,10 @@ class ControlNode_Leg(Node):
         with open(COMBINED_HIGH_PATH, 'w', newline='') as f:
             writer = csv.writer(f)
 
-            writer.writerow(["extrude_speed_slider", "extrude_angle_slider", "extrude_length_slider", "down_length_slider", "down_speed_slider", "delay_after_down",
-                            "shear_length", "shear_speed", "delay_after_shear", "back_speed",
-                             "moving_speed", "moving_step_angle", "time_delay", "variable1", "variable3",  "search_start", "search_end", "ground_height", "extrude_back_speed"])
+            writer.writerow(["traveler_mode", "extrude_speed", "extrude_angle", "extrude_depth", "shear_penetration_depth", "shear_penetration_speed",
+                            "shear_penetration_delay", "shear_length", "shear_speed", "shear_delay",
+                             "shear_return_speed", "workspace_angular_speed", "workspace_moving_angle", "workspace_time_delay", "static_length",
+                             "static_angle", "search_start", "search_end", "ground_height", "back_speed"])
             writer.writerow([mode.traveler_mode,
                             config.extrude_speed,
                             config.extrude_angle,
@@ -464,6 +467,7 @@ class ControlNode_Leg(Node):
         self.position1 = msg.motor1_pos
         self.torque = msg.motor0_torque
         self.torque1 = msg.motor1_torque
+
 
         if (self.updateplotflag):
 

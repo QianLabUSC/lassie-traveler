@@ -638,7 +638,7 @@ class TravelerApp(MDApp):
         if('/' in self.screen.ids.filename.text):
             self.file_name = self.screen.ids.filename.text + "_"+ self.trial_start_time 
         else:
-            self.file_name = 'MUD_Data/' + self.screen.ids.filename.text + "_"+ self.trial_start_time
+            self.file_name = 'AMES/' + self.screen.ids.filename.text + "_"+ self.trial_start_time
         # self.start_logi_usb_camera_recording()
         self.ros_node.calibrate(self.drag_traj, self.inputargs.mode) 
         self.updateplotflag = True
