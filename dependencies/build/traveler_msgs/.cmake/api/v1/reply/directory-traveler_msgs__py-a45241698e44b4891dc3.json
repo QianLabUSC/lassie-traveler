@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "traveler_msgs__py",
+		"source" : "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/traveler_msgs__py"
+	}
+}

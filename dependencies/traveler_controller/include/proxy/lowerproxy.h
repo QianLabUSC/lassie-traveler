@@ -43,7 +43,14 @@ namespace control{
 		void getMeanDiffAngles(float &theta, float &gamma);
 		void calculateLength(float diffAng, float &proj, float &length);
 		void calculationHelper();
+
+		/**
+		 * @brief Calculate the position of the motors and publish the position command
+		 * @param traveler_: The Traveler object containing the control data
+		 * @return void
+		 */
 		void getToePosition();
+		
 		void getToeVelocity();
 		void getToeForce();
 		void Estop();

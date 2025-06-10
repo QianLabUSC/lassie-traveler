@@ -1,0 +1,10 @@
+[01m[K/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/proxy/upperproxy.cpp:[m[K In member function ‘[01m[Kvoid traveler_namespace::control::upperproxy::[01;32m[Khandle_gui[m[K(traveler_msgs::msg::TravelerConfig_<std::allocator<void> >::SharedPtr)[m[K’:
+[01m[K/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/proxy/upperproxy.cpp:69:57:[m[K [01;31m[Kerror: [m[K‘[01m[Kusing std::__shared_ptr_access<traveler_msgs::msg::TravelerConfig_<std::allocator<void> >, __gnu_cxx::_S_atomic, false, false>::element_type = struct traveler_msgs::msg::TravelerConfig_<std::allocator<void> >[m[K’ {aka ‘[01m[Kstruct traveler_msgs::msg::TravelerConfig_<std::allocator<void> >[m[K’} has no member named ‘[01m[Kstatic_length[m[K’
+   69 |             traveler_leg.traj_data.static_length = msg->[01;31m[Kstatic_length[m[K / 100.0f;
+      |                                                         [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/proxy/upperproxy.cpp:70:57:[m[K [01;31m[Kerror: [m[K‘[01m[Kusing std::__shared_ptr_access<traveler_msgs::msg::TravelerConfig_<std::allocator<void> >, __gnu_cxx::_S_atomic, false, false>::element_type = struct traveler_msgs::msg::TravelerConfig_<std::allocator<void> >[m[K’ {aka ‘[01m[Kstruct traveler_msgs::msg::TravelerConfig_<std::allocator<void> >[m[K’} has no member named ‘[01m[Kstatic_angle[m[K’
+   70 |             traveler_leg.traj_data.static_angle = (msg->[01;31m[Kstatic_angle[m[K / -180 * M_PI) + M_PI;
+      |                                                         [01;31m[K^~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/traveler_high_controller.dir/build.make:160: CMakeFiles/traveler_high_controller.dir/src/proxy/upperproxy.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/traveler_high_controller.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

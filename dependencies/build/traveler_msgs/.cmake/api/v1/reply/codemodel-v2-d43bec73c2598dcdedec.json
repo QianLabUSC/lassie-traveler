@@ -1,0 +1,242 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-62f2de85ed919a66935b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "traveler_msgs__py",
+					"jsonFile" : "directory-traveler_msgs__py-a45241698e44b4891dc3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/traveler_msgs__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "traveler_msgs",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_traveler_msgs_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_traveler_msgs_egg-be633902cb50947966eb.json",
+					"name" : "ament_cmake_python_build_traveler_msgs_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_traveler_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_traveler_msgs-7421ee0723d1fe4387c2.json",
+					"name" : "ament_cmake_python_copy_traveler_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs-e8dff917a50f34ff4e86.json",
+					"name" : "traveler_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__cpp-80469f534e597f1dfbea.json",
+					"name" : "traveler_msgs__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "traveler_msgs__py::@00028194af6de87ec9a8",
+					"jsonFile" : "target-traveler_msgs__py-322f94cde0ad33dc8b1c.json",
+					"name" : "traveler_msgs__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_generator_c-1c55ee4653a0c4e6b77e.json",
+					"name" : "traveler_msgs__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_generator_py-033be4423e91b97cfa8d.json",
+					"name" : "traveler_msgs__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_generator_type_description-afd98ced21a36a815226.json",
+					"name" : "traveler_msgs__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_typesupport_c-9a8bfb2dda9c10280078.json",
+					"name" : "traveler_msgs__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_typesupport_cpp-ea984429a02454b165a5.json",
+					"name" : "traveler_msgs__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_typesupport_fastrtps_c-a7097626f2e0f25ba109.json",
+					"name" : "traveler_msgs__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_typesupport_fastrtps_cpp-ac74ccd4e5cfafa356e4.json",
+					"name" : "traveler_msgs__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_typesupport_introspection_c-78be9b90f38456689ab1.json",
+					"name" : "traveler_msgs__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs__rosidl_typesupport_introspection_cpp-4e01d4e3f49cd0580806.json",
+					"name" : "traveler_msgs__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs_s__rosidl_typesupport_c-8aaeb47731c929a34b25.json",
+					"name" : "traveler_msgs_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs_s__rosidl_typesupport_fastrtps_c-7e8fd857222cbf256638.json",
+					"name" : "traveler_msgs_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs_s__rosidl_typesupport_introspection_c-a27cc4fe8146397e0f29.json",
+					"name" : "traveler_msgs_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_msgs_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_msgs_uninstall-ebb40e17ef34843509ec.json",
+					"name" : "traveler_msgs_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-63f59aa3c53d1ebdbf81.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs",
+		"source" : "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_msgs"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

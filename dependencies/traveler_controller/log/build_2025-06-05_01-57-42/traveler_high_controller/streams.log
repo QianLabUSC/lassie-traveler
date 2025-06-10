@@ -1,0 +1,45 @@
+[0.004s] Invoking command in '/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/build/traveler_high_controller': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller -DCMAKE_INSTALL_PREFIX=/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/install/traveler_high_controller
+[0.033s] -- The C compiler identification is GNU 13.3.0
+[0.061s] -- The CXX compiler identification is GNU 13.3.0
+[0.071s] -- Detecting C compiler ABI info
+[0.113s] -- Detecting C compiler ABI info - done
+[0.118s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.118s] -- Detecting C compile features
+[0.118s] -- Detecting C compile features - done
+[0.123s] -- Detecting CXX compiler ABI info
+[0.164s] -- Detecting CXX compiler ABI info - done
+[0.169s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.169s] -- Detecting CXX compile features
+[0.169s] -- Detecting CXX compile features - done
+[0.170s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.230s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.273s] -- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.288s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.292s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.298s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.305s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.337s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.338s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.371s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[0.380s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[0.391s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.423s] -- Found std_msgs: 5.3.6 (/opt/ros/jazzy/share/std_msgs/cmake)
+[0.435s] [31mCMake Error at CMakeLists.txt:18 (find_package):
+[0.435s]   By not providing "Findcontrol_msgs.cmake" in CMAKE_MODULE_PATH this project
+[0.435s]   has asked CMake to find a package configuration file provided by
+[0.435s]   "control_msgs", but CMake did not find one.
+[0.435s] 
+[0.435s]   Could not find a package configuration file provided by "control_msgs" with
+[0.435s]   any of the following names:
+[0.435s] 
+[0.435s]     control_msgsConfig.cmake
+[0.435s]     control_msgs-config.cmake
+[0.435s] 
+[0.435s]   Add the installation prefix of "control_msgs" to CMAKE_PREFIX_PATH or set
+[0.435s]   "control_msgs_DIR" to a directory containing one of the above files.  If
+[0.435s]   "control_msgs" provides a separate development package or SDK, be sure it
+[0.435s]   has been installed.
+[0.435s] 
+[0.435s] [0m
+[0.435s] -- Configuring incomplete, errors occurred!
+[0.441s] Invoked command in '/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/build/traveler_high_controller' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller -DCMAKE_INSTALL_PREFIX=/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/install/traveler_high_controller

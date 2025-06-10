@@ -385,16 +385,16 @@ class TravelerApp(MDApp):
             self.screen.ids.configure_layout.clear_widgets()
             self.screen.ids.configure_layout.add_widget(self.extrude_tab)
             self.current_tab = self.extrude_tab
-        elif(type == "Penetrate and Shear"): # mode 2
-            self.drag_traj = 3
-            self.screen.ids.configure_layout.clear_widgets()
-            self.screen.ids.configure_layout.add_widget(self.shear_tab)
-            self.current_tab = self.shear_tab
-        elif(type == "Traverse Workspace"): # mode 3
+        elif(type == "Traverse Workspace"): # mode 2
             self.drag_traj = 2
             self.screen.ids.configure_layout.clear_widgets()
             self.screen.ids.configure_layout.add_widget(self.workspace_tab)
             self.current_tab = self.workspace_tab
+        elif(type == "Penetrate and Shear"): # mode 3
+            self.drag_traj = 3
+            self.screen.ids.configure_layout.clear_widgets()
+            self.screen.ids.configure_layout.add_widget(self.shear_tab)
+            self.current_tab = self.shear_tab
         elif(type == "Free Moving"): # mode 4
             self.drag_traj = 4
             self.screen.ids.configure_layout.clear_widgets()
@@ -410,7 +410,7 @@ class TravelerApp(MDApp):
             self.screen.ids.configure_layout.clear_widgets()
             self.screen.ids.configure_layout.add_widget(self.minirhex_tab)
             self.current_tab = self.minirhex_tab
-        elif(type == "Detect Ground"): # mode 6
+        elif(type == "Detect Ground"): # mode 7
             self.drag_traj = 7
             self.screen.ids.configure_layout.clear_widgets()
             self.screen.ids.configure_layout.add_widget(self.ground_tab)
@@ -647,25 +647,47 @@ class TravelerApp(MDApp):
         
         # Set the config
         self.traveler_config = TravelerConfig()
-        self.traveler_config.extrude_speed = float(round(self.extrude_tab.ids.extrude_speed_slider.value)) 
-        self.traveler_config.extrude_angle = float(round(self.extrude_tab.ids.extrude_angle_slider.value)) 
-        self.traveler_config.extrude_depth = float(round(self.extrude_tab.ids.extrude_length_slider.value)) 
-        self.traveler_config.shear_penetration_depth = float(round(self.shear_tab.ids.Slider_1.value)) 
-        self.traveler_config.shear_penetration_speed = float(round(self.shear_tab.ids.Slider_2.value))
-        self.traveler_config.shear_penetration_delay = float(round(self.shear_tab.ids.Slider_3.value)) 
-        self.traveler_config.shear_length = float(round(self.shear_tab.ids.Slider_4.value)) 
-        self.traveler_config.shear_speed = float(round(self.shear_tab.ids.Slider_5.value)) 
-        self.traveler_config.shear_delay = float(round(self.shear_tab.ids.Slider_6.value)) 
-        self.traveler_config.shear_return_speed = float(round(self.shear_tab.ids.Slider_7.value)) 
-        self.traveler_config.workspace_angular_speed = float(round(self.workspace_tab.ids.moving_speed_slider.value)) 
-        self.traveler_config.workspace_moving_angle = float(round(self.workspace_tab.ids.moving_step_angle_slider.value)) 
-        self.traveler_config.workspace_time_delay = float(round(self.workspace_tab.ids.time_delay_slider.value)) 
-        self.traveler_config.static_length = float(round(self.free_tab.ids.variable1_slider.value))/10 
-        self.traveler_config.static_angle = float(round(self.free_tab.ids.variable3_slider.value))   
-        self.traveler_config.search_start = float(round(self.ground_tab.ids.variable1_slider.value)/10) 
-        self.traveler_config.search_end = float(round(self.ground_tab.ids.variable2_slider.value)/10)  
-        self.traveler_config.ground_height = float(round(self.ground_tab.ids.variable3_slider.value)/10)
-        self.traveler_config.back_speed = float(round(self.extrude_tab.ids.back_speed_slider.value))
+        self.traveler_config.traveler_mode = int(self.drag_traj)
+        if int(self.drag_traj) == 1:
+            # Extrustion Trajectory Parameters
+            # data order: extrude_speed, back speed, extrude angle, extrude_depth
+            self.traveler_config.data = []
+            self.traveler_config.data.append(float(round(self.extrude_tab.ids.extrude_speed_slider.value)))
+            self.traveler_config.data.append(float(round(self.extrude_tab.ids.back_speed_slider.value)))
+            self.traveler_config.data.append(float(round(self.extrude_tab.ids.extrude_angle_slider.value)))
+            self.traveler_config.data.append(float(round(self.extrude_tab.ids.extrude_length_slider.value)))
+        elif int(self.drag_traj) == 2:
+            # Workspace Traversal Parameters
+            # data order: workspace_angular_speed, workspace_moving_angle, orkspace_time_delay
+            self.traveler_config.data = []
+            self.traveler_config.data.append(float(round(self.workspace_tab.ids.moving_speed_slider.value)))
+            self.traveler_config.data.append(float(round(self.workspace_tab.ids.moving_step_angle_slider.value)))
+            self.traveler_config.data.append(float(round(self.workspace_tab.ids.time_delay_slider.value)))
+        elif int(self.drag_traj) == 3:
+            # Penetration and Shear Parameters
+            # data order: shear_penetration_depth, shear_penetration_speed,
+            # shear_penetration_delay, shear_length, shear_speed, shear_delay, shear_return_speed
+            self.traveler_config.data = []
+            self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_1.value)))
+            self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_2.value)))
+            self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_3.value)))
+            self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_4.value)))
+            self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_5.value)))
+            self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_6.value)))
+            self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_7.value)))
+        elif int(self.drag_traj) == 4:
+            # Free Moving Parameters
+            # data order: static length, static angle, search start
+            self.traveler_config.data = []
+            self.traveler_config.data.append(float(round(self.free_tab.ids.variable1_slider.value))/10)
+            self.traveler_config.data.append(float(round(self.free_tab.ids.variable3_slider.value)))
+        elif int(self.drag_traj) == 7:
+            # Ground Height Detection Parameters
+            # data order: search_start, search_end, ground_height
+            self.traveler_config.data = []
+            self.traveler_config.data.append(float(round(self.ground_tab.ids.variable1_slider.value)/10))
+            self.traveler_config.data.append(float(round(self.ground_tab.ids.variable2_slider.value)/10))
+            self.traveler_config.data.append(float(round(self.ground_tab.ids.variable3_slider.value)/10))
         self.traveler_config.filename = str(self.file_name)
         
         self.ros_node.set_config(self.traveler_config)

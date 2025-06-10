@@ -1,0 +1,11 @@
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/uninstall.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/traveler_high_controller_uninstall.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/traveler_high_controller.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/odrive_can_interface.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/test.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/edit_cache.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/rebuild_cache.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/list_install_components.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/install.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/install/local.dir
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/install/strip.dir

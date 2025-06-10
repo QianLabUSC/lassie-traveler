@@ -1,0 +1,10 @@
+msg/OdriveStatus.idl
+msg/SetInputPosition.idl
+msg/TravelerConfig.idl
+msg/TravelerConfig.msg
+msg/TravelerMode.idl
+msg/TravelerMode.msg
+msg/TravelerStatus.idl
+msg/TravelerStatus.msg
+odrivemsg/OdriveStatus.msg
+odrivemsg/SetInputPosition.msg

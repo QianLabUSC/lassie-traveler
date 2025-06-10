@@ -1,0 +1,26 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from traveler_msgs/msg/TravelerConfig.msg
+// generated code does not contain a copyright notice
+
+
+module traveler_msgs {
+  module msg {
+    struct TravelerConfig {
+      @verbatim (language="comment", text=
+        "Currently unused")
+      string running_scenario;
+
+      @verbatim (language="comment", text=
+        "Currently unused")
+      string filename;
+
+      @verbatim (language="comment", text=
+        "This is the type of mode")
+      int8 traveler_mode;
+
+      @verbatim (language="comment", text=
+        "This is the trajectory data associated with the mode")
+      sequence<float> data;
+    };
+  };
+};

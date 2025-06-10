@@ -35,9 +35,10 @@ int main(int argc, char ** argv)
   traj_parser.init();
   rclcpp::Rate loop_rate(1500);       //renew frequence 100HZ
   while (rclcpp::ok()) {
+    // spin Upper_proxy_ to receive gui command
     rclcpp::spin_some(Upper_proxy_);
-    // // remove spin low proxy, because it doesnot need to receive message
-    // // rclcpp::spin_some(Lower_proxy_);
+    // remove spin low proxy, because it doesnot need to receive message
+    // rclcpp::spin_some(Lower_proxy_);
     // rclcpp::spin_some(Can_driver_);
     Can_driver_->get_motor_status(traveler_leg_);
     Lower_proxy_->UpdateJoystickStatus(traveler_leg_);             //update leg feedback status

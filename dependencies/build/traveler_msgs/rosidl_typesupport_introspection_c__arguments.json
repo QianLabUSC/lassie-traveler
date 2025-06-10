@@ -1,0 +1,27 @@
+{
+  "package_name": "traveler_msgs",
+  "output_dir": "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_typesupport_introspection_c/traveler_msgs",
+  "template_dir": "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource",
+  "idl_tuples": [
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs:msg/TravelerConfig.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs:msg/TravelerMode.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs:msg/TravelerStatus.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs:msg/OdriveStatus.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs:msg/SetInputPosition.idl"
+  ],
+  "target_dependencies": [
+    "/opt/ros/jazzy/lib/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c",
+    "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_typesupport_introspection_c/__init__.py",
+    "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/idl__rosidl_typesupport_introspection_c.h.em",
+    "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/idl__type_support.c.em",
+    "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/msg__rosidl_typesupport_introspection_c.h.em",
+    "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/msg__type_support.c.em",
+    "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/srv__rosidl_typesupport_introspection_c.h.em",
+    "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/srv__type_support.c.em",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs/msg/TravelerConfig.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs/msg/TravelerMode.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs/msg/TravelerStatus.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs/msg/OdriveStatus.idl",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_msgs/rosidl_adapter/traveler_msgs/msg/SetInputPosition.idl"
+  ]
+}

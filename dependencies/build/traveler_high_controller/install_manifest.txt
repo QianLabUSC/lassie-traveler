@@ -1,0 +1,17 @@
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/lib/traveler_high_controller/traveler_high_controller
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/lib/traveler_high_controller/odrive_can_interface
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/ament_index/resource_index/package_run_dependencies/traveler_high_controller
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/ament_index/resource_index/parent_prefix_path/traveler_high_controller
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/ament_prefix_path.sh
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/ament_prefix_path.dsv
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/path.sh
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/path.dsv
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.bash
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.sh
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.zsh
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.dsv
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/package.dsv
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/ament_index/resource_index/packages/traveler_high_controller
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/cmake/traveler_high_controllerConfig.cmake
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/cmake/traveler_high_controllerConfig-version.cmake
+/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/package.xml

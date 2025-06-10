@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from traveler_msgs/odrivemsg/OdriveStatus.msg
+// generated code does not contain a copyright notice
+
+
+module traveler_msgs {
+  module msg {
+    struct OdriveStatus {
+      uint8 can_channel;
+
+      uint8 axis;
+
+      float pos_estimate;
+
+      float vel_estimate;
+
+      float iq_setpoint;
+
+      float iq_measured;
+    };
+  };
+};

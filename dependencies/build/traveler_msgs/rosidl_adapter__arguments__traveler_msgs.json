@@ -1,0 +1,10 @@
+{
+  "package_name": "traveler_msgs",
+  "non_idl_tuples": [
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_msgs:msg/TravelerConfig.msg",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_msgs:msg/TravelerMode.msg",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_msgs:msg/TravelerStatus.msg",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_msgs:odrivemsg/OdriveStatus.msg",
+    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_msgs:odrivemsg/SetInputPosition.msg"
+  ]
+}

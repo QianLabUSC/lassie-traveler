@@ -168,8 +168,8 @@ namespace control
         float forceX = invDeterminant * (u0 * (phi * cosTheta - leg_length_ * sinTheta) + u1 * (phi * cosTheta + leg_length_ * sinTheta));
         float forceY = invDeterminant * (u0 * (-1.0f * phi * sinTheta - leg_length_ * cosTheta) + u1 * (-1.0f * phi * sinTheta + leg_length_ * cosTheta));
 
-        traveler_leg_.traveler_chassis.Leg_lf.toe_force.y = forceY;
         traveler_leg_.traveler_chassis.Leg_lf.toe_force.x = forceX;
+        traveler_leg_.traveler_chassis.Leg_lf.toe_force.y = forceY;
 
         traveler_leg_.traveler_chassis.Leg_lf.diffAng = gamma_;
         traveler_leg_.traveler_chassis.Leg_lf.meanAng = theta_;
@@ -304,7 +304,6 @@ namespace control
     void lowerproxy::Estop()
     {
     }
-
 
     void lowerproxy::calculate_position(Traveler &traveler_ )
     {

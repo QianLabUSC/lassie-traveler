@@ -123,7 +123,7 @@ struct TrajectoryData
     float shear_return_speed;               // given as cm/s
 
     // Workspace Traversal Parameters
-    float workspace_angular_speed;          // !given as cm/s, should be rad/s or deg/s
+    float workspace_angular_speed;          // given as cm/s, should be rad/s or deg/s
     float workspace_moving_angle;           // given as deg
     float workspace_time_delay;             // given as seconds
 

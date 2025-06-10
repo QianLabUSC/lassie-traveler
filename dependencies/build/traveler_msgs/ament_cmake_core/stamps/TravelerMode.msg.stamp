@@ -1,0 +1,2 @@
+bool start_flag
+int8 traveler_mode

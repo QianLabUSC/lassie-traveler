@@ -36,28 +36,46 @@ void upperproxy::handle_start
 
 void upperproxy::handle_gui
     (const traveler_msgs::msg::TravelerConfig::SharedPtr msg){
-        // int len = msg->data.size();
-        // traveler_leg.traveler_gui.start_flag = msg->start_flag;
-        // traveler_leg.traveler_gui.drag_traj = msg->drag_traj;
-        traveler_leg.traj_data.extrude_speed = msg->extrude_speed / 100.0f;
-        traveler_leg.traj_data.extrude_angle = (msg->extrude_angle / -180 * M_PI) + M_PI;
-        traveler_leg.traj_data.extrude_depth = msg->extrude_depth / 100.0f;
-        traveler_leg.traj_data.shear_penetration_depth = msg->shear_penetration_depth / 100.0f;
-        traveler_leg.traj_data.shear_penetration_speed = msg->shear_penetration_speed / 100.0f;
-        traveler_leg.traj_data.shear_penetration_delay = msg->shear_penetration_delay;
-        traveler_leg.traj_data.shear_length = msg->shear_length/ 100.0f;
-        traveler_leg.traj_data.shear_speed = msg->shear_speed/ 100.0f;
-        traveler_leg.traj_data.shear_delay = msg->shear_delay;
-        traveler_leg.traj_data.shear_return_speed = msg->shear_return_speed / 100.0f;
-        traveler_leg.traj_data.workspace_angular_speed = msg->workspace_angular_speed / 100.0f;
-        traveler_leg.traj_data.workspace_moving_angle = msg->workspace_moving_angle / 180 * M_PI;
-        traveler_leg.traj_data.workspace_time_delay = msg->workspace_time_delay;
-        traveler_leg.traj_data.static_length = msg->static_length / 100.0f;
-        traveler_leg.traj_data.static_angle = (msg->static_angle / -180 * M_PI) + M_PI;
-        traveler_leg.traj_data.search_start = msg->search_start / 100.0f;
-        traveler_leg.traj_data.search_end = msg->search_end / 100.0f;
-        traveler_leg.traj_data.ground_height = msg->ground_height / 100.0f;
-        traveler_leg.traj_data.back_speed = msg->back_speed / 100.0f;
+        if(msg->traveler_mode == 1){
+            // Extrustion Trajectory Parameters
+            // data order: extrude_speed, back speed, extrude angle, extrude_depth
+            traveler_leg.traj_data.extrude_speed = msg->data[0] / 100.0f;
+            traveler_leg.traj_data.back_speed = msg->data[1] / 100.0f;
+            traveler_leg.traj_data.extrude_angle = (msg->data[2] / -180 * M_PI) + M_PI;
+            traveler_leg.traj_data.extrude_depth = msg->data[3] / 100.0f;
+        }
+        else if(msg->traveler_mode == 2){
+            // Workspace Traversal Parameters
+            // data order: workspace_angular_speed, workspace_moving_angle, orkspace_time_delay
+            traveler_leg.traj_data.workspace_angular_speed = msg->data[0] / 100.0f;
+            traveler_leg.traj_data.workspace_moving_angle = msg->data[1] / 180 * M_PI;
+            traveler_leg.traj_data.workspace_time_delay = msg->data[2];
+        }
+        else if(msg->traveler_mode == 3){
+            // Penetration and Shear Parameters
+            // data order: shear_penetration_depth, shear_penetration_speed,
+            // shear_penetration_delay, shear_length, shear_speed, shear_delay, shear_return_speed
+            traveler_leg.traj_data.shear_penetration_depth = msg->data[0] / 100.0f;
+            traveler_leg.traj_data.shear_penetration_speed = msg->data[1] / 100.0f;
+            traveler_leg.traj_data.shear_penetration_delay = msg->data[2];
+            traveler_leg.traj_data.shear_length = msg->data[3]/ 100.0f;
+            traveler_leg.traj_data.shear_speed = msg->data[4]/ 100.0f;
+            traveler_leg.traj_data.shear_delay = msg->data[5];
+            traveler_leg.traj_data.shear_return_speed = msg->data[6] / 100.0f;
+        }
+        else if(msg->traveler_mode == 4){
+            // Free Moving Parameters
+            // data order: static_length, static_angle
+            traveler_leg.traj_data.static_length = msg->data[0] / 100.0f;
+            traveler_leg.traj_data.static_angle = (msg->data[1] / -180 * M_PI) + M_PI;
+        }
+        else if(msg->traveler_mode == 7){
+            // Ground Height Detection Parameters
+            // data order: search_start, search_end, ground_height
+            traveler_leg.traj_data.search_start = msg->data[0] / 100.0f;
+            traveler_leg.traj_data.search_end = msg->data[1] / 100.0f;
+            traveler_leg.traj_data.ground_height = msg->data[2] / 100.0f;
+        }
     }
 
 void upperproxy::UpdateGuiCommand(Traveler& traveler_){
