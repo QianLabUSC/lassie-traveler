@@ -601,8 +601,8 @@ class TravelerApp(MDApp):
             self.stop_trajectory()
             
             # custom override movement to move leg out of way after extrusion
-            if (self.drag_traj == 1):
-                self.automatic_move(170, 45)
+            # if (self.drag_traj == 1):
+            #     self.automatic_move(170, 45)
         else:
             self.run_trajectory()
 
@@ -650,7 +650,7 @@ class TravelerApp(MDApp):
         self.traveler_config.traveler_mode = int(self.drag_traj)
         if int(self.drag_traj) == 1:
             # Extrustion Trajectory Parameters
-            # data order: extrude_speed, back speed, extrude angle, extrude_depth
+            # data order: extrude_speed, back_speed, extrude_angle, extrude_depth
             self.traveler_config.data = []
             self.traveler_config.data.append(float(round(self.extrude_tab.ids.extrude_speed_slider.value)))
             self.traveler_config.data.append(float(round(self.extrude_tab.ids.back_speed_slider.value)))
@@ -677,7 +677,7 @@ class TravelerApp(MDApp):
             self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_7.value)))
         elif int(self.drag_traj) == 4:
             # Free Moving Parameters
-            # data order: static length, static angle, search start
+            # data order: static_length, static_angle, search_start
             self.traveler_config.data = []
             self.traveler_config.data.append(float(round(self.free_tab.ids.variable1_slider.value))/10)
             self.traveler_config.data.append(float(round(self.free_tab.ids.variable3_slider.value)))

@@ -30,12 +30,14 @@ upperproxy::upperproxy(std::string name) : Node(name){
 
 void upperproxy::handle_start
     (const traveler_msgs::msg::TravelerMode::SharedPtr msg){
+        printf("handle start called...\n");
         traveler_leg.traveler_gui.start_flag = msg->start_flag;
         traveler_leg.traveler_gui.drag_traj = msg->traveler_mode;
     }
 
 void upperproxy::handle_gui
     (const traveler_msgs::msg::TravelerConfig::SharedPtr msg){
+        printf("handle gui called...\n");
         if(msg->traveler_mode == 1){
             // Extrustion Trajectory Parameters
             // data order: extrude_speed, back speed, extrude angle, extrude_depth
@@ -75,6 +77,17 @@ void upperproxy::handle_gui
             traveler_leg.traj_data.search_start = msg->data[0] / 100.0f;
             traveler_leg.traj_data.search_end = msg->data[1] / 100.0f;
             traveler_leg.traj_data.ground_height = msg->data[2] / 100.0f;
+        }
+        else if(msg->traveler_mode == 8){
+            // Generate Trajectory Parameters
+            // data order: waypoints_x, waypoints_y, waypoints_t
+            traveler_leg.traj_data.num_waypoints = 0;
+            for(size_t i = 0; i < msg->data.size() - 2; i += 3){
+                traveler_leg.traj_data.waypoints_x.push_back(msg->data[i]);
+                traveler_leg.traj_data.waypoints_y.push_back(msg->data[i + 1]);
+                traveler_leg.traj_data.waypoints_v.push_back(msg->data[i + 2]);
+                traveler_leg.traj_data.num_waypoints = traveler_leg.traj_data.num_waypoints + 1;
+            }
         }
     }
 

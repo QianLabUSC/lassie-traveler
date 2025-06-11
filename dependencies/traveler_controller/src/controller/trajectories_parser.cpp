@@ -12,15 +12,6 @@ namespace traveler_namespace
     {
 
         void TrajectoriesParser::init() {
-            // auto start = chrono::steady_clock::now();
-            // auto now = chrono::steady_clock::now();
-            // auto t = chrono::duration<float>(now - start).count();
-            // // 2 second delay
-            // while (t < 2.0f) {
-            //     t = chrono::duration<float>(now - start).count();
-            // }
-            
-
         }
 
         void TrajectoriesParser::setCoupledPosition(Traveler &traveler)
@@ -126,94 +117,6 @@ namespace traveler_namespace
             traveler.traveler_control.Leg_lf.theta_command = traverseParams.curr_theta;
             traveler.traveler_control.Leg_lf.length_command = traverseParams.curr_ext;
             traveler.traveler_control.Leg_lf.state_flag = WT_state;
-        }
-
-        bool TrajectoriesParser::penetrate(Traveler &traveler)
-        {
-            
-            if (first_iteration)
-            {
-                float theta = traveler.traj_data.extrude_angle;
-                float L = traveler.traj_data.extrude_depth + traveler.traj_data.ground_height;
-                // define start and end points
-                float starting_extension = max((traveler.traj_data.ground_height - 0.03f), (L2 - L1 + L3 + 0.01f));
-                printf("Penetration Trial with Angle %f degrees, L: %f, Starting Extension: %f", theta, L, starting_extension);
-                abstractToPhysical(starting_extension, theta, penetration_start);
-                abstractToPhysical(L, theta, penetration_end);
-
-                clock_start_ = chrono::steady_clock::now();
-                // printf(".............Penetrating................\n");
-                
-            }
-
-            auto now = chrono::steady_clock::now();
-            float t = chrono::duration<float>(now - clock_start_).count();
-            float delay_elapsed;
-            switch (Pene_state)
-            {
-            // move to start of penetration
-            case 0:
-                // printf(".............Go to start point................\n");
-                // printf("penetration_startx: %f, penetration_starty: %f\n", penetration_start.x, penetration_start.y);
-                // printf("penetration_endx: %f, penetration_endy: %f\n", penetration_end.x, penetration_end.y);
-                
-                if (goToPoint(traveler, penetration_start) == 1)
-                {
-                    Pene_state++;
-                    dg.delay_start = chrono::steady_clock::now();
-                }
-                break;
-            case 1:
-                // printf(".............pause................\n");
-                delay_elapsed = chrono::duration<float>(now - dg.delay_start).count();
-                if (delay_elapsed > delay)
-                {
-                    Pene_state++;
-                    clock_start_ = chrono::steady_clock::now();
-                }
-                
-                break;
-                
-            // penetrate downward
-            case 2:
-                // printf(".............penetrate downward................\n");
-                // printf("penetration_startx: %f, penetration_starty: %f\n", penetration_start.x, penetration_start.y);
-                // printf("penetration_endx: %f, penetration_endy: %f\n", penetration_end.x, penetration_end.y);
-                if (linearTraj(t, traveler.traj_data.extrude_speed, penetration_start, penetration_end, target_x, target_y))
-                {
-                    Pene_state++;
-                    dg.delay_start = chrono::steady_clock::now();
-                }
-                // printf("target_x: %f, target_y: %f\n", target_x, target_y);
-                cartesianMotorCommand(traveler, target_x, target_y);
-                
-                break;
-            // delay in extended position
-            case 3:
-                // printf(".............delay in extended position................\n");
-                delay_elapsed = chrono::duration<float>(now - dg.delay_start).count();
-                if (delay_elapsed > delay)
-                {
-                    Pene_state++;
-                    clock_start_ = chrono::steady_clock::now();
-                }
-                
-                break;
-            // return to start position
-            case 4:
-                
-                if (linearTraj(t, traveler.traj_data.back_speed, penetration_end, penetration_start, target_x, target_y))
-                {
-                    Pene_state++;
-                }
-                cartesianMotorCommand(traveler, target_x, target_y);
-                // printf(".............return to start position................\n");
-                break;
-            case 5:
-                return true;
-            }
-            
-            return false;
         }
 
         bool TrajectoriesParser::detectGround(Traveler &traveler)
@@ -329,22 +232,32 @@ namespace traveler_namespace
             // once there, delays at the point for given time
             // then gets next point.
             
-            if (processWaypoint(traveler)) {
-                waypoint_index_++;
-                state_flag_ = waypoint_index_; // to let us know in the data what waypoint we are going to
-                traveler.traveler_chassis.Leg_lf.state_flag = state_flag_;
-                if (waypoint_index_ < waypoints_.size()) {
+            // use goToPoint to get to the first waypoint
+            if (waypoint_index_ == 0) {
+                // set the first waypoint
+                if(goToPoint(traveler, curr_waypoint_.point)){
+                    waypoint_index_++;
+                    state_flag_ = waypoint_index_; // to let us know in the data what waypoint we are going to
+                    traveler.traveler_chassis.Leg_lf.state_flag = state_flag_;
                     prev_waypoint_ = curr_waypoint_;
                     curr_waypoint_ = waypoints_[waypoint_index_];
-                    printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
-                } else if (waypoint_index_ == waypoints_.size()){
-                    prev_waypoint_ = curr_waypoint_;
-                    curr_waypoint_ = waypoints_[0]; // return to first waypoint
-                    printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
-                } else {
-                    printf("Waypoint Trajectory Complete\n");
-                    traj_complete_ = true;
-                    return true;
+                }
+            }
+            else {
+                if (processWaypoint(traveler)) {
+                    waypoint_index_++;
+                    state_flag_ = waypoint_index_; // to let us know in the data what waypoint we are going to
+                    traveler.traveler_chassis.Leg_lf.state_flag = state_flag_;
+                    if (waypoint_index_ < waypoints_.size()) {
+                        prev_waypoint_ = curr_waypoint_;
+                        curr_waypoint_ = waypoints_[waypoint_index_];
+                        printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
+                    }
+                    else {
+                        printf("Waypoint Trajectory Complete\n");
+                        traj_complete_ = true;
+                        return true;
+                    }
                 }
             }
             return false;
@@ -430,6 +343,7 @@ namespace traveler_namespace
 
                     waypoints_.push_back(Waypoint(start_, traveler.traj_data.back_speed, 2.0f));
                     waypoints_.push_back(Waypoint(end_, traveler.traj_data.extrude_speed, 2.0f));
+                    waypoints_.push_back(Waypoint(start_, traveler.traj_data.back_speed, 2.0f));
                     break;
                 }
                 case 2:
@@ -460,7 +374,7 @@ namespace traveler_namespace
                     waypoints_.push_back(Waypoint(pene_start_x, shear_y, traveler.traj_data.shear_penetration_speed, traveler.traj_data.shear_penetration_delay));
                     waypoints_.push_back(Waypoint(-1.0f * pene_start_x, shear_y, traveler.traj_data.shear_speed, traveler.traj_data.shear_delay));
                     waypoints_.push_back(Waypoint(-1.0f * pene_start_x, pene_start_y, traveler.traj_data.shear_return_speed, 1.0f));
-
+                    waypoints_.push_back(Waypoint(0.0f, starting_extension, traveler.traj_data.shear_return_speed, 1.0f));
                     break;
                 }
                 case 4:
@@ -478,90 +392,6 @@ namespace traveler_namespace
             }
         }
 
-        
-
-        bool TrajectoriesParser::penetrateAndShearRoutine(Traveler &traveler) {
-            if (ps.first_iteration) {
-                ps.first_iteration = false;
-                ps.state = 0;
-
-                float depth = -1.0f * (traveler.traj_data.shear_penetration_depth + traveler.traj_data.ground_height);
-                float starting_extension = max((traveler.traj_data.ground_height - 0.03), (L2 - L1 + L3 + 0.01));
-
-                float start_depth = -1.0f * (starting_extension);
-                ps.A = XY_pair(0.0f, start_depth);
-                ps.B = XY_pair(0.0f, depth);
-                ps.C = XY_pair(traveler.traj_data.shear_length, depth);
-                
-                ps.vel1 = traveler.traj_data.shear_penetration_speed;
-                ps.vel2 = traveler.traj_data.shear_speed;
-                ps.vel3 = traveler.traj_data.shear_return_speed;
-
-                ps.delay1 = traveler.traj_data.shear_penetration_delay;
-                ps.delay2 = traveler.traj_data.shear_delay;
-
-                ps.curr = ps.A;
-                ps.dest = ps.B;
-                ps.curr_vel = ps.vel1;
-            }
-            float X, Y, t;
-            switch(ps.state) 
-            {
-                case 0: // smooth start
-                {
-                    // printf(".............go to start position................\n");
-                    if (goToPoint(traveler, ps.A) == 1) {
-                        ps.state++;
-                        ps.start = chrono::steady_clock::now();
-                    }
-                    break;
-                }
-                case 1: // }
-                case 3: // movement states
-                case 5: // }
-                {
-                    // printf("..........move...........: state: %d\n", ps.state);
-                    // printf("move_startx: %f, move_starty: %f\n", ps.curr.x, ps.curr.y);
-                    // printf("move_endx: %f, move_endy: %f\n", ps.dest.x, ps.dest.y);
-                    auto now = chrono::steady_clock::now();
-                    // printTrajData(traveler);
-                    t = chrono::duration<float>(now - ps.start).count();
-                    if (linearTraj(t, ps.curr_vel, ps.curr, ps.dest, X, Y)) {
-                        // update state
-                        ps.state++;
-                        // update start time for delay state
-                        ps.start = chrono::steady_clock::now();
-                        ps.curr_delay = (ps.state == 2) ? ps.delay1 : ps.delay2;
-                    }
-                    // printf("curr_vel: %f, curr_vel: %f\n",ps.curr_vel, ps.curr_vel);
-                    cartesianMotorCommand(traveler, X, Y);
-                    break;
-                }
-                case 2: // delay states
-                case 4: //
-                {
-                    // printf("..........delay...........: state: %d\n", ps.state);
-                    auto now = chrono::steady_clock::now();
-                    ps.delay_elapsed = chrono::duration<float>(now - ps.start).count();
-                    // float delay = (ps.state == 2) ? ps.delay1 : ps.delay2;
-                    if (ps.delay_elapsed > ps.curr_delay)
-                    {
-                        ps.state++;
-                        // update start time for linear traj state
-                        ps.start = chrono::steady_clock::now();
-                        ps.curr = (ps.state == 3) ? ps.B : ps.C;
-                        ps.dest = (ps.state == 3) ? ps.C : ps.A;
-                        ps.curr_vel = (ps.state == 3) ? ps.vel2 : ps.vel3;
-                        
-                    }
-                    break;
-                }
-                default:
-                    return true;  // state 6 is completion
-            }
-            traveler.traveler_control.Leg_lf.state_flag = ps.state;
-            return false;
-        }
 
         int TrajectoriesParser::goToPoint(Traveler &traveler, XY_pair Goal)
         {
@@ -671,13 +501,10 @@ namespace traveler_namespace
 
         bool TrajectoriesParser::homing(Traveler &traveler)
         {
-            TrajectoriesParser::goToPoint(traveler, XY_pair(0.0f, 0.173f - L3));
-        }
-
-        void TrajectoriesParser::generateTempSpeed(Traveler &traveler)
-        {
-            traveler.traveler_control.Leg_lf.axis0.motor_control_speed = 2;
-            // traveler.traveler_chassis.Leg_lb.axis0.position
+            if(TrajectoriesParser::goToPoint(traveler, XY_pair(0.0f, -0.173f)) == 1)
+                return true;
+            else
+                return false;
         }
 
         void TrajectoriesParser::generateTempTraj(Traveler &traveler)
@@ -687,35 +514,6 @@ namespace traveler_namespace
             ** commands in form: traveler.traveler_gui._____
             ** are value set by GUI
             */
-           
-            /**
-             * for debugging
-             */
-            // if (loop_counter < 300) {
-            //     loop_counter++;
-            //     traveler.traveler_gui.start_flag = 0;
-            // } else {
-            //     traveler.traveler_gui.start_flag = 1;
-            // }
-
-            // traveler.traveler_gui.start_flag = 1;
-            //  traveler.traveler_gui.drag_traj = 1; // selected trajectory
-            //  traveler.traj_data.shear_penetration_depth = 5 / 100.0f;
-            //  traveler.traj_data.shear_penetration_speed = 10 / 100.0f;
-            //  traveler.traj_data.shear_penetration_delay = 3;
-            //  traveler.traj_data.shear_length = 12/ 100.0f;
-            //  traveler.traj_data.shear_speed = 10/ 100.0f;
-            //  traveler.traj_data.shear_delay = 2;
-            //  traveler.traj_data.shear_return_speed = 10 / 100.0f;
-            //  traveler.traj_data.ground_height = 16/100.0f;
-
-            // traveler.traj_data.extrude_speed =  0.1;                 // given as cm/s
-            // traveler.traj_data.back_speed = 0.1;
-            // traveler.traj_data.extrude_angle = M_PI;                 // given as deg
-            // traveler.traj_data.extrude_depth = 0.06; 
-
-            // traveler.traj_data.static_angle = M_PI;                 // given as deg
-            // traveler.traj_data.static_length = 0.22;
 
             int trajectory = traveler.traveler_gui.drag_traj;
             int RUN = traveler.traveler_gui.start_flag;
@@ -812,6 +610,25 @@ namespace traveler_namespace
                     printf("Detecting Ground\n");
                 }
                 detectGround(traveler);
+                break;
+
+            case 8:
+                if (first_iteration)
+                {
+                    printf("General Trajectory\n");
+                    destination = {traveler.traj_data.waypoints_x[0], traveler.traj_data.waypoints_y[0]};
+                }
+                if (run_)
+                {
+                    // first go to the first waypoint
+                    int status = goToPoint(traveler, destination);
+                    run_ = (status == 0) ? true : false;
+                }
+                else
+                {
+                    // then go to the following waypoints
+                    waypointTrajectory(traveler);
+                }
                 break;
 
             default:

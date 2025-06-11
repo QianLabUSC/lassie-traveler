@@ -10,5 +10,12 @@ remote_dir="/home/ubuntu/roboland"
 
 # Sync folders to the remote directory
 for folder in "${folders[@]}"; do
-    rsync -azP -e "ssh -i ~/.ssh/id_rsa" "$folder" "$user@$host:$remote_dir"
+    rsync -azP \
+        --exclude "build" \
+        --exclude "install" \
+        --exclude "log" \
+        -e "ssh -i ~/.ssh/id_rsa" \
+        "$folder" "$user@$host:$remote_dir"
+
+    # rsync -azP -e "ssh -i ~/.ssh/id_rsa" "$folder" "$user@$host:$remote_dir"
 done

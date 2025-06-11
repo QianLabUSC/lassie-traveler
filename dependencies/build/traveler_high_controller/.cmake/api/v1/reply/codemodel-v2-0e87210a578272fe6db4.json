@@ -1,0 +1,87 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "traveler_high_controller",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "odrive_can_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-odrive_can_interface-Debug-2ef4c71cd5d4baf00c00.json",
+					"name" : "odrive_can_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_high_controller::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_high_controller-Debug-5625de4ed43e2157bd44.json",
+					"name" : "traveler_high_controller",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "traveler_high_controller_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-traveler_high_controller_uninstall-Debug-ac1d935d4f3a01ed8ef1.json",
+					"name" : "traveler_high_controller_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-Debug-10e71b8e6ad8882c1fac.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller",
+		"source" : "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

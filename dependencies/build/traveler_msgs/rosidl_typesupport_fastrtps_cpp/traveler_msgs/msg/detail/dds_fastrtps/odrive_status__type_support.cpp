@@ -2,10 +2,8 @@
 // with input from traveler_msgs:msg/OdriveStatus.idl
 // generated code does not contain a copyright notice
 #include "traveler_msgs/msg/detail/odrive_status__rosidl_typesupport_fastrtps_cpp.hpp"
-#include "traveler_msgs/msg/detail/odrive_status__functions.h"
 #include "traveler_msgs/msg/detail/odrive_status__struct.hpp"
 
-#include <cstddef>
 #include <limits>
 #include <stdexcept>
 #include <string>
@@ -13,7 +11,6 @@
 #include "rosidl_typesupport_fastrtps_cpp/identifier.hpp"
 #include "rosidl_typesupport_fastrtps_cpp/message_type_support.h"
 #include "rosidl_typesupport_fastrtps_cpp/message_type_support_decl.hpp"
-#include "rosidl_typesupport_fastrtps_cpp/serialization_helpers.hpp"
 #include "rosidl_typesupport_fastrtps_cpp/wstring_conversion.hpp"
 #include "fastcdr/Cdr.h"
 
@@ -29,7 +26,6 @@ namespace msg
 namespace typesupport_fastrtps_cpp
 {
 
-
 bool
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
 cdr_serialize(
@@ -38,22 +34,16 @@ cdr_serialize(
 {
   // Member: can_channel
   cdr << ros_message.can_channel;
-
   // Member: axis
   cdr << ros_message.axis;
-
   // Member: pos_estimate
   cdr << ros_message.pos_estimate;
-
   // Member: vel_estimate
   cdr << ros_message.vel_estimate;
-
   // Member: iq_setpoint
   cdr << ros_message.iq_setpoint;
-
   // Member: iq_measured
   cdr << ros_message.iq_measured;
-
   return true;
 }
 
@@ -84,7 +74,6 @@ cdr_deserialize(
   return true;
 }
 
-
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
 get_serialized_size(
@@ -104,35 +93,30 @@ get_serialized_size(
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: axis
   {
     size_t item_size = sizeof(ros_message.axis);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: pos_estimate
   {
     size_t item_size = sizeof(ros_message.pos_estimate);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: vel_estimate
   {
     size_t item_size = sizeof(ros_message.vel_estimate);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: iq_setpoint
   {
     size_t item_size = sizeof(ros_message.iq_setpoint);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: iq_measured
   {
     size_t item_size = sizeof(ros_message.iq_measured);
@@ -142,115 +126,11 @@ get_serialized_size(
 
   return current_alignment - initial_alignment;
 }
-
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
 max_serialized_size_OdriveStatus(
   bool & full_bounded,
-  bool & is_plain,
-  size_t current_alignment)
-{
-  size_t initial_alignment = current_alignment;
-
-  const size_t padding = 4;
-  const size_t wchar_size = 4;
-  size_t last_member_size = 0;
-  (void)last_member_size;
-  (void)padding;
-  (void)wchar_size;
-
-  full_bounded = true;
-  is_plain = true;
-
-  // Member: can_channel
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
-    current_alignment += array_size * sizeof(uint8_t);
-  }
-  // Member: axis
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
-    current_alignment += array_size * sizeof(uint8_t);
-  }
-  // Member: pos_estimate
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-  // Member: vel_estimate
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-  // Member: iq_setpoint
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-  // Member: iq_measured
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  size_t ret_val = current_alignment - initial_alignment;
-  if (is_plain) {
-    // All members are plain, and type is not empty.
-    // We still need to check that the in-memory alignment
-    // is the same as the CDR mandated alignment.
-    using DataType = traveler_msgs::msg::OdriveStatus;
-    is_plain =
-      (
-      offsetof(DataType, iq_measured) +
-      last_member_size
-      ) == ret_val;
-  }
-
-  return ret_val;
-}
-
-bool
-ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
-cdr_serialize_key(
-  const traveler_msgs::msg::OdriveStatus & ros_message,
-  eprosima::fastcdr::Cdr & cdr)
-{
-  // Member: can_channel
-  cdr << ros_message.can_channel;
-
-  // Member: axis
-  cdr << ros_message.axis;
-
-  // Member: pos_estimate
-  cdr << ros_message.pos_estimate;
-
-  // Member: vel_estimate
-  cdr << ros_message.vel_estimate;
-
-  // Member: iq_setpoint
-  cdr << ros_message.iq_setpoint;
-
-  // Member: iq_measured
-  cdr << ros_message.iq_measured;
-
-  return true;
-}
-
-size_t
-ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
-get_serialized_size_key(
-  const traveler_msgs::msg::OdriveStatus & ros_message,
   size_t current_alignment)
 {
   size_t initial_alignment = current_alignment;
@@ -259,133 +139,57 @@ get_serialized_size_key(
   const size_t wchar_size = 4;
   (void)padding;
   (void)wchar_size;
+  (void)full_bounded;
+
 
   // Member: can_channel
   {
-    size_t item_size = sizeof(ros_message.can_channel);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   // Member: axis
   {
-    size_t item_size = sizeof(ros_message.axis);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   // Member: pos_estimate
   {
-    size_t item_size = sizeof(ros_message.pos_estimate);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
   // Member: vel_estimate
   {
-    size_t item_size = sizeof(ros_message.vel_estimate);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
   // Member: iq_setpoint
   {
-    size_t item_size = sizeof(ros_message.iq_setpoint);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
   // Member: iq_measured
   {
-    size_t item_size = sizeof(ros_message.iq_measured);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
   return current_alignment - initial_alignment;
 }
-
-size_t
-ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
-max_serialized_size_key_OdriveStatus(
-  bool & full_bounded,
-  bool & is_plain,
-  size_t current_alignment)
-{
-  size_t initial_alignment = current_alignment;
-
-  const size_t padding = 4;
-  const size_t wchar_size = 4;
-  size_t last_member_size = 0;
-  (void)last_member_size;
-  (void)padding;
-  (void)wchar_size;
-
-  full_bounded = true;
-  is_plain = true;
-
-  // Member: can_channel
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
-    current_alignment += array_size * sizeof(uint8_t);
-  }
-
-  // Member: axis
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
-    current_alignment += array_size * sizeof(uint8_t);
-  }
-
-  // Member: pos_estimate
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  // Member: vel_estimate
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  // Member: iq_setpoint
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  // Member: iq_measured
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  size_t ret_val = current_alignment - initial_alignment;
-  if (is_plain) {
-    // All members are plain, and type is not empty.
-    // We still need to check that the in-memory alignment
-    // is the same as the CDR mandated alignment.
-    using DataType = traveler_msgs::msg::OdriveStatus;
-    is_plain =
-      (
-      offsetof(DataType, iq_measured) +
-      last_member_size
-      ) == ret_val;
-  }
-
-  return ret_val;
-}
-
 
 static bool _OdriveStatus__cdr_serialize(
   const void * untyped_ros_message,
@@ -416,18 +220,9 @@ static uint32_t _OdriveStatus__get_serialized_size(
   return static_cast<uint32_t>(get_serialized_size(*typed_message, 0));
 }
 
-static size_t _OdriveStatus__max_serialized_size(char & bounds_info)
+static size_t _OdriveStatus__max_serialized_size(bool & full_bounded)
 {
-  bool full_bounded;
-  bool is_plain;
-  size_t ret_val;
-
-  ret_val = max_serialized_size_OdriveStatus(full_bounded, is_plain, 0);
-
-  bounds_info =
-    is_plain ? ROSIDL_TYPESUPPORT_FASTRTPS_PLAIN_TYPE :
-    full_bounded ? ROSIDL_TYPESUPPORT_FASTRTPS_BOUNDED_TYPE : ROSIDL_TYPESUPPORT_FASTRTPS_UNBOUNDED_TYPE;
-  return ret_val;
+  return max_serialized_size_OdriveStatus(full_bounded, 0);
 }
 
 static message_type_support_callbacks_t _OdriveStatus__callbacks = {
@@ -436,17 +231,13 @@ static message_type_support_callbacks_t _OdriveStatus__callbacks = {
   _OdriveStatus__cdr_serialize,
   _OdriveStatus__cdr_deserialize,
   _OdriveStatus__get_serialized_size,
-  _OdriveStatus__max_serialized_size,
-  nullptr
+  _OdriveStatus__max_serialized_size
 };
 
 static rosidl_message_type_support_t _OdriveStatus__handle = {
   rosidl_typesupport_fastrtps_cpp::typesupport_identifier,
   &_OdriveStatus__callbacks,
   get_message_typesupport_handle_function,
-  &traveler_msgs__msg__OdriveStatus__get_type_hash,
-  &traveler_msgs__msg__OdriveStatus__get_type_description,
-  &traveler_msgs__msg__OdriveStatus__get_type_description_sources,
 };
 
 }  // namespace typesupport_fastrtps_cpp

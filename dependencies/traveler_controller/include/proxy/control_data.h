@@ -138,6 +138,12 @@ struct TrajectoryData
     float ground_height;
     // *Note: not updated by GUI
     float current_t; // time counter
+
+    // parameters for generate trajectory
+    int num_waypoints; // number of waypoints
+    std::vector<float> waypoints_x; // x coordinates of waypoints
+    std::vector<float> waypoints_y; // y coordinates of waypoints
+    std::vector<float> waypoints_v; // velocity of waypoints
 };
 
 struct Traveler

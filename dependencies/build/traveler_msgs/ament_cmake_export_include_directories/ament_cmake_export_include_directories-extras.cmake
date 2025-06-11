@@ -1,6 +1,6 @@
 # generated from ament_cmake_export_include_directories/cmake/ament_cmake_export_include_directories-extras.cmake.in
 
-set(_exported_include_dirs "${traveler_msgs_DIR}/../../../include/traveler_msgs;${traveler_msgs_DIR}/../../../include")
+set(_exported_include_dirs "${traveler_msgs_DIR}/../../../include")
 
 # append include directories to traveler_msgs_INCLUDE_DIRS
 # warn about not existing paths

@@ -4,7 +4,6 @@
 
 #include "cstddef"
 #include "rosidl_runtime_c/message_type_support_struct.h"
-#include "traveler_msgs/msg/detail/odrive_status__functions.h"
 #include "traveler_msgs/msg/detail/odrive_status__struct.hpp"
 #include "rosidl_typesupport_cpp/identifier.hpp"
 #include "rosidl_typesupport_cpp/message_type_support.hpp"
@@ -73,9 +72,6 @@ static const rosidl_message_type_support_t OdriveStatus_message_type_support_han
   ::rosidl_typesupport_cpp::typesupport_identifier,
   reinterpret_cast<const type_support_map_t *>(&_OdriveStatus_message_typesupport_map),
   ::rosidl_typesupport_cpp::get_message_typesupport_handle_function,
-  &traveler_msgs__msg__OdriveStatus__get_type_hash,
-  &traveler_msgs__msg__OdriveStatus__get_type_description,
-  &traveler_msgs__msg__OdriveStatus__get_type_description_sources,
 };
 
 }  // namespace rosidl_typesupport_cpp

@@ -2,10 +2,8 @@
 // with input from traveler_msgs:msg/SetInputPosition.idl
 // generated code does not contain a copyright notice
 #include "traveler_msgs/msg/detail/set_input_position__rosidl_typesupport_fastrtps_cpp.hpp"
-#include "traveler_msgs/msg/detail/set_input_position__functions.h"
 #include "traveler_msgs/msg/detail/set_input_position__struct.hpp"
 
-#include <cstddef>
 #include <limits>
 #include <stdexcept>
 #include <string>
@@ -13,7 +11,6 @@
 #include "rosidl_typesupport_fastrtps_cpp/identifier.hpp"
 #include "rosidl_typesupport_fastrtps_cpp/message_type_support.h"
 #include "rosidl_typesupport_fastrtps_cpp/message_type_support_decl.hpp"
-#include "rosidl_typesupport_fastrtps_cpp/serialization_helpers.hpp"
 #include "rosidl_typesupport_fastrtps_cpp/wstring_conversion.hpp"
 #include "fastcdr/Cdr.h"
 
@@ -29,7 +26,6 @@ namespace msg
 namespace typesupport_fastrtps_cpp
 {
 
-
 bool
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
 cdr_serialize(
@@ -38,19 +34,14 @@ cdr_serialize(
 {
   // Member: can_channel
   cdr << ros_message.can_channel;
-
   // Member: axis
   cdr << ros_message.axis;
-
   // Member: input_position
   cdr << ros_message.input_position;
-
   // Member: vel_ff
   cdr << ros_message.vel_ff;
-
   // Member: torque_ff
   cdr << ros_message.torque_ff;
-
   return true;
 }
 
@@ -78,7 +69,6 @@ cdr_deserialize(
   return true;
 }
 
-
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
 get_serialized_size(
@@ -98,28 +88,24 @@ get_serialized_size(
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: axis
   {
     size_t item_size = sizeof(ros_message.axis);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: input_position
   {
     size_t item_size = sizeof(ros_message.input_position);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: vel_ff
   {
     size_t item_size = sizeof(ros_message.vel_ff);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-
   // Member: torque_ff
   {
     size_t item_size = sizeof(ros_message.torque_ff);
@@ -129,225 +115,62 @@ get_serialized_size(
 
   return current_alignment - initial_alignment;
 }
-
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
 max_serialized_size_SetInputPosition(
   bool & full_bounded,
-  bool & is_plain,
   size_t current_alignment)
 {
   size_t initial_alignment = current_alignment;
 
   const size_t padding = 4;
   const size_t wchar_size = 4;
-  size_t last_member_size = 0;
-  (void)last_member_size;
   (void)padding;
   (void)wchar_size;
+  (void)full_bounded;
 
-  full_bounded = true;
-  is_plain = true;
 
   // Member: can_channel
   {
     size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
+
     current_alignment += array_size * sizeof(uint8_t);
   }
+
   // Member: axis
   {
     size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
+
     current_alignment += array_size * sizeof(uint8_t);
   }
+
   // Member: input_position
   {
     size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
+
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
+
   // Member: vel_ff
   {
     size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint16_t);
-    current_alignment += array_size * sizeof(uint16_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint16_t));
-  }
-  // Member: torque_ff
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint16_t);
+
     current_alignment += array_size * sizeof(uint16_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint16_t));
   }
 
-  size_t ret_val = current_alignment - initial_alignment;
-  if (is_plain) {
-    // All members are plain, and type is not empty.
-    // We still need to check that the in-memory alignment
-    // is the same as the CDR mandated alignment.
-    using DataType = traveler_msgs::msg::SetInputPosition;
-    is_plain =
-      (
-      offsetof(DataType, torque_ff) +
-      last_member_size
-      ) == ret_val;
-  }
-
-  return ret_val;
-}
-
-bool
-ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
-cdr_serialize_key(
-  const traveler_msgs::msg::SetInputPosition & ros_message,
-  eprosima::fastcdr::Cdr & cdr)
-{
-  // Member: can_channel
-  cdr << ros_message.can_channel;
-
-  // Member: axis
-  cdr << ros_message.axis;
-
-  // Member: input_position
-  cdr << ros_message.input_position;
-
-  // Member: vel_ff
-  cdr << ros_message.vel_ff;
-
-  // Member: torque_ff
-  cdr << ros_message.torque_ff;
-
-  return true;
-}
-
-size_t
-ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
-get_serialized_size_key(
-  const traveler_msgs::msg::SetInputPosition & ros_message,
-  size_t current_alignment)
-{
-  size_t initial_alignment = current_alignment;
-
-  const size_t padding = 4;
-  const size_t wchar_size = 4;
-  (void)padding;
-  (void)wchar_size;
-
-  // Member: can_channel
-  {
-    size_t item_size = sizeof(ros_message.can_channel);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
-  }
-
-  // Member: axis
-  {
-    size_t item_size = sizeof(ros_message.axis);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
-  }
-
-  // Member: input_position
-  {
-    size_t item_size = sizeof(ros_message.input_position);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
-  }
-
-  // Member: vel_ff
-  {
-    size_t item_size = sizeof(ros_message.vel_ff);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
-  }
-
   // Member: torque_ff
   {
-    size_t item_size = sizeof(ros_message.torque_ff);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint16_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint16_t));
   }
 
   return current_alignment - initial_alignment;
 }
-
-size_t
-ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_traveler_msgs
-max_serialized_size_key_SetInputPosition(
-  bool & full_bounded,
-  bool & is_plain,
-  size_t current_alignment)
-{
-  size_t initial_alignment = current_alignment;
-
-  const size_t padding = 4;
-  const size_t wchar_size = 4;
-  size_t last_member_size = 0;
-  (void)last_member_size;
-  (void)padding;
-  (void)wchar_size;
-
-  full_bounded = true;
-  is_plain = true;
-
-  // Member: can_channel
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
-    current_alignment += array_size * sizeof(uint8_t);
-  }
-
-  // Member: axis
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint8_t);
-    current_alignment += array_size * sizeof(uint8_t);
-  }
-
-  // Member: input_position
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint32_t);
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  // Member: vel_ff
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint16_t);
-    current_alignment += array_size * sizeof(uint16_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint16_t));
-  }
-
-  // Member: torque_ff
-  {
-    size_t array_size = 1;
-    last_member_size = array_size * sizeof(uint16_t);
-    current_alignment += array_size * sizeof(uint16_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint16_t));
-  }
-
-  size_t ret_val = current_alignment - initial_alignment;
-  if (is_plain) {
-    // All members are plain, and type is not empty.
-    // We still need to check that the in-memory alignment
-    // is the same as the CDR mandated alignment.
-    using DataType = traveler_msgs::msg::SetInputPosition;
-    is_plain =
-      (
-      offsetof(DataType, torque_ff) +
-      last_member_size
-      ) == ret_val;
-  }
-
-  return ret_val;
-}
-
 
 static bool _SetInputPosition__cdr_serialize(
   const void * untyped_ros_message,
@@ -378,18 +201,9 @@ static uint32_t _SetInputPosition__get_serialized_size(
   return static_cast<uint32_t>(get_serialized_size(*typed_message, 0));
 }
 
-static size_t _SetInputPosition__max_serialized_size(char & bounds_info)
+static size_t _SetInputPosition__max_serialized_size(bool & full_bounded)
 {
-  bool full_bounded;
-  bool is_plain;
-  size_t ret_val;
-
-  ret_val = max_serialized_size_SetInputPosition(full_bounded, is_plain, 0);
-
-  bounds_info =
-    is_plain ? ROSIDL_TYPESUPPORT_FASTRTPS_PLAIN_TYPE :
-    full_bounded ? ROSIDL_TYPESUPPORT_FASTRTPS_BOUNDED_TYPE : ROSIDL_TYPESUPPORT_FASTRTPS_UNBOUNDED_TYPE;
-  return ret_val;
+  return max_serialized_size_SetInputPosition(full_bounded, 0);
 }
 
 static message_type_support_callbacks_t _SetInputPosition__callbacks = {
@@ -398,17 +212,13 @@ static message_type_support_callbacks_t _SetInputPosition__callbacks = {
   _SetInputPosition__cdr_serialize,
   _SetInputPosition__cdr_deserialize,
   _SetInputPosition__get_serialized_size,
-  _SetInputPosition__max_serialized_size,
-  nullptr
+  _SetInputPosition__max_serialized_size
 };
 
 static rosidl_message_type_support_t _SetInputPosition__handle = {
   rosidl_typesupport_fastrtps_cpp::typesupport_identifier,
   &_SetInputPosition__callbacks,
   get_message_typesupport_handle_function,
-  &traveler_msgs__msg__SetInputPosition__get_type_hash,
-  &traveler_msgs__msg__SetInputPosition__get_type_description,
-  &traveler_msgs__msg__SetInputPosition__get_type_description_sources,
 };
 
 }  // namespace typesupport_fastrtps_cpp

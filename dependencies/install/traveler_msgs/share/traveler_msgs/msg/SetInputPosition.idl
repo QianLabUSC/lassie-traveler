@@ -13,11 +13,11 @@ module traveler_msgs {
       float input_position;
 
       @verbatim (language="comment", text=
-        "0.1 Factor")
+        " 0.1 Factor")
       int16 vel_ff;
 
       @verbatim (language="comment", text=
-        "0.001 Factor")
+        " 0.001 Factor")
       int16 torque_ff;
     };
   };

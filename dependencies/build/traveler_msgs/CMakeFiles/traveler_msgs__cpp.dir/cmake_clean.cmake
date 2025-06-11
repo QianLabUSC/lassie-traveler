@@ -21,7 +21,6 @@ file(REMOVE_RECURSE
   "rosidl_generator_cpp/traveler_msgs/msg/detail/traveler_status__traits.hpp"
   "rosidl_generator_cpp/traveler_msgs/msg/detail/traveler_status__type_support.hpp"
   "rosidl_generator_cpp/traveler_msgs/msg/odrive_status.hpp"
-  "rosidl_generator_cpp/traveler_msgs/msg/rosidl_generator_cpp__visibility_control.hpp"
   "rosidl_generator_cpp/traveler_msgs/msg/set_input_position.hpp"
   "rosidl_generator_cpp/traveler_msgs/msg/traveler_config.hpp"
   "rosidl_generator_cpp/traveler_msgs/msg/traveler_mode.hpp"

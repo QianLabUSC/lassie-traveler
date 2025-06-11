@@ -4,19 +4,15 @@
 remote_user="ubuntu"
 remote_host="192.168.2.1"
 
-echo "Attempting to establish SSH connection to $remote_user@$remote_host..."
+# get the master pc time zone
+master_tz=$(timedatectl show --property=Timezone | cut -d '=' -f2)
+# get the current master pc time
+current_time=$(date '+%Y-%m-%d %H:%M:%S')
 
-# Loop until the SSH connection is successful
-while true; do
-    ssh -o "BatchMode=yes" -o "ConnectTimeout=5" $remote_user@$remote_host
-    if [ $? -eq 0 ]; then
-        echo "SSH connection established successfully!"
-        break
-    else
-        echo "SSH connection not yet available. Retrying in 5 seconds..."
-        sleep 5
-    fi
-done
+# ssh into the remote machine and set its time
+ssh -t $remote_user@$remote_host "sudo timedatectl set-timezone $master_tz && sudo date -s '$current_time' && exec bash" || {
+    echo "Failed to update time on remote machine";
+    exit 1;
+}
 
-
-
+echo "SSH connection established successfully!"

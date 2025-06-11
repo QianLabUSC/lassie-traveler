@@ -1,8 +1,8 @@
-# Install script for directory: /home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller
+# Install script for directory: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller")
+  set(CMAKE_INSTALL_PREFIX "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -37,24 +37,19 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-# Set default install directory permissions.
-if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/usr/bin/objdump")
-endif()
-
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/traveler_high_controller" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/traveler_high_controller")
     file(RPATH_CHECK
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/traveler_high_controller"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller" TYPE EXECUTABLE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/traveler_high_controller")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller" TYPE EXECUTABLE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/traveler_high_controller")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/traveler_high_controller" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/traveler_high_controller")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/traveler_high_controller"
-         OLD_RPATH "/opt/ros/jazzy/lib:/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_msgs/lib:"
+         OLD_RPATH "/opt/ros/foxy/lib:/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_msgs/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/traveler_high_controller")
@@ -62,23 +57,19 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   endif()
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/traveler_high_controller.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
-endif()
-
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/odrive_can_interface" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/odrive_can_interface")
     file(RPATH_CHECK
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/odrive_can_interface"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller" TYPE EXECUTABLE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/odrive_can_interface")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller" TYPE EXECUTABLE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/odrive_can_interface")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/odrive_can_interface" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/odrive_can_interface")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/odrive_can_interface"
-         OLD_RPATH "/opt/ros/jazzy/lib:/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_msgs/lib:"
+         OLD_RPATH "/opt/ros/foxy/lib:/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_msgs/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/traveler_high_controller/odrive_can_interface")
@@ -86,67 +77,63 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   endif()
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/CMakeFiles/odrive_can_interface.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/traveler_high_controller")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/traveler_high_controller")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/traveler_high_controller")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/traveler_high_controller")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/opt/ros/foxy/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/opt/ros/jazzy/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/ament_prefix_path.dsv")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/ament_prefix_path.dsv")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/opt/ros/foxy/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/opt/ros/jazzy/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/path.dsv")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/environment" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/path.dsv")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.bash")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.bash")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.sh")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.sh")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.zsh")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.zsh")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.dsv")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/local_setup.dsv")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/package.dsv")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_environment_hooks/package.dsv")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_index/share/ament_index/resource_index/packages/traveler_high_controller")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_index/share/ament_index/resource_index/packages/traveler_high_controller")
-endif()
-
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller/cmake" TYPE FILE FILES
-    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_core/traveler_high_controllerConfig.cmake"
-    "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_core/traveler_high_controllerConfig-version.cmake"
+    "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_core/traveler_high_controllerConfig.cmake"
+    "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/ament_cmake_core/traveler_high_controllerConfig-version.cmake"
     )
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/traveler_high_controller" TYPE FILE FILES "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/package.xml")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -157,5 +144,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/yifeng/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/build/traveler_high_controller/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

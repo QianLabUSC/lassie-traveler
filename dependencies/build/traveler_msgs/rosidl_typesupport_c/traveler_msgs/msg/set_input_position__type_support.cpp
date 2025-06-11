@@ -4,9 +4,8 @@
 
 #include "cstddef"
 #include "rosidl_runtime_c/message_type_support_struct.h"
+#include "traveler_msgs/msg/rosidl_typesupport_c__visibility_control.h"
 #include "traveler_msgs/msg/detail/set_input_position__struct.h"
-#include "traveler_msgs/msg/detail/set_input_position__type_support.h"
-#include "traveler_msgs/msg/detail/set_input_position__functions.h"
 #include "rosidl_typesupport_c/identifier.h"
 #include "rosidl_typesupport_c/message_type_support_dispatch.h"
 #include "rosidl_typesupport_c/type_support_map.h"
@@ -73,9 +72,6 @@ static const rosidl_message_type_support_t SetInputPosition_message_type_support
   rosidl_typesupport_c__typesupport_identifier,
   reinterpret_cast<const type_support_map_t *>(&_SetInputPosition_message_typesupport_map),
   rosidl_typesupport_c__get_message_typesupport_handle_function,
-  &traveler_msgs__msg__SetInputPosition__get_type_hash,
-  &traveler_msgs__msg__SetInputPosition__get_type_description,
-  &traveler_msgs__msg__SetInputPosition__get_type_description_sources,
 };
 
 }  // namespace rosidl_typesupport_c
@@ -89,6 +85,7 @@ extern "C"
 {
 #endif
 
+ROSIDL_TYPESUPPORT_C_EXPORT_traveler_msgs
 const rosidl_message_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_c, traveler_msgs, msg, SetInputPosition)() {
   return &::traveler_msgs::msg::rosidl_typesupport_c::SetInputPosition_message_type_support_handle;
