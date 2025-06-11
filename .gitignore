@@ -1,8 +1,9 @@
-build/*
-devel/*
-logs/*
-site/*
-.catkin_tools/*
-.devcontainer/*
-.vscode/*
-experiment_records/*
+**/build/*
+**/devel/*
+**/logs/*
+**/install/*
+**/site/*
+**/.catkin_tools/*
+**/.devcontainer/*
+**/.vscode/*
+**/experiment_records/*

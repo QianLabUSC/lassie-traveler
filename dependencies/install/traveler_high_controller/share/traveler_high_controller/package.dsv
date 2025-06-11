@@ -1,8 +1,0 @@
-source;share/traveler_high_controller/hook/cmake_prefix_path.ps1
-source;share/traveler_high_controller/hook/cmake_prefix_path.dsv
-source;share/traveler_high_controller/hook/cmake_prefix_path.sh
-source;share/traveler_high_controller/local_setup.bash
-source;share/traveler_high_controller/local_setup.dsv
-source;share/traveler_high_controller/local_setup.ps1
-source;share/traveler_high_controller/local_setup.sh
-source;share/traveler_high_controller/local_setup.zsh
