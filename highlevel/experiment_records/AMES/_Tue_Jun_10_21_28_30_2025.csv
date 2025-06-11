@@ -1,3 +1,0 @@
-traveler_mode,extrude_speed,extrude_angle,extrude_depth,shear_penetration_depth,shear_penetration_speed,shear_penetration_delay,shear_length,shear_speed,shear_delay,shear_return_speed,workspace_angular_speed,workspace_moving_angle,workspace_time_delay,static_length,static_angle,search_start,search_end,ground_height,back_speed
-1,1.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
-time,toeforce_x,toeforce_y,toe_position_x,toe_position_y,toe_velocity_x,toe_velocity_y,position,position1,torque,torque1,theta command,length command,state flag,current
