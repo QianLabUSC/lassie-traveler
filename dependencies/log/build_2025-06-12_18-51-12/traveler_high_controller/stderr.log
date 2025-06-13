@@ -1,8 +1,0 @@
-[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:[m[K In member function ‘[01m[Kbool traveler_namespace::control::TrajectoriesParser::waypointTrajectory(Traveler&)[m[K’:
-[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:255:41:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Waypoint>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wsign-compare[m[K]
-  255 |                     if ([01;35m[Kwaypoint_index_ < waypoints_.size()[m[K) {
-      |                         [01;35m[K~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~[m[K
-[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:[m[K In member function ‘[01m[Kvoid traveler_namespace::control::TrajectoriesParser::generateWaypoints(Traveler&)[m[K’:
-[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:394:31:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Waypoint>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wsign-compare[m[K]
-  394 |             for (int i = 0; [01;35m[Ki < waypoints_.size()[m[K; i++) {
-      |                             [01;35m[K~~^~~~~~~~~~~~~~~~~~~[m[K
