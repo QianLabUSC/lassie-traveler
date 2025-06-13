@@ -40,11 +40,12 @@ void upperproxy::handle_gui
         printf("handle gui called...\n");
         if(msg->traveler_mode == 1){
             // Extrustion Trajectory Parameters
-            // data order: extrude_speed, back speed, extrude angle, extrude_depth
+            // data order: extrude_speed, back speed, extrude angle, extrude_depth, ground_height
             traveler_leg.traj_data.extrude_speed = msg->data[0] / 100.0f;
             traveler_leg.traj_data.back_speed = msg->data[1] / 100.0f;
             traveler_leg.traj_data.extrude_angle = (msg->data[2] / -180 * M_PI) + M_PI;
             traveler_leg.traj_data.extrude_depth = msg->data[3] / 100.0f;
+            traveler_leg.traj_data.ground_height = msg->data[4] / 100.0f;
         }
         else if(msg->traveler_mode == 2){
             // Workspace Traversal Parameters
@@ -56,7 +57,7 @@ void upperproxy::handle_gui
         else if(msg->traveler_mode == 3){
             // Penetration and Shear Parameters
             // data order: shear_penetration_depth, shear_penetration_speed,
-            // shear_penetration_delay, shear_length, shear_speed, shear_delay, shear_return_speed
+            // shear_penetration_delay, shear_length, shear_speed, shear_delay, shear_return_speed, ground_height
             traveler_leg.traj_data.shear_penetration_depth = msg->data[0] / 100.0f;
             traveler_leg.traj_data.shear_penetration_speed = msg->data[1] / 100.0f;
             traveler_leg.traj_data.shear_penetration_delay = msg->data[2];
@@ -64,6 +65,7 @@ void upperproxy::handle_gui
             traveler_leg.traj_data.shear_speed = msg->data[4]/ 100.0f;
             traveler_leg.traj_data.shear_delay = msg->data[5];
             traveler_leg.traj_data.shear_return_speed = msg->data[6] / 100.0f;
+            traveler_leg.traj_data.ground_height = msg->data[7] / 100.0f;
         }
         else if(msg->traveler_mode == 4){
             // Free Moving Parameters

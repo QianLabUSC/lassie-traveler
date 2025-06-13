@@ -129,6 +129,13 @@ bool linearTraj(float t_rel, float vel, XY_pair A, XY_pair B, float &X, float &Y
 
     // find the magnitude of the vector
     float vector_magnitude = sqrtf(d1*d1 + d2*d2);
+
+    // if A = B, assign X = A.x, Y = A.y and return true
+    if(vector_magnitude == 0.0){
+        X = A.x;
+        Y = A.y;
+        return true;
+    }
     
     // scale the vector to the desired velocity
     float scalar = vel/vector_magnitude;

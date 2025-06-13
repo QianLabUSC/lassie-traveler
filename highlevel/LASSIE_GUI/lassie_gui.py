@@ -656,6 +656,7 @@ class TravelerApp(MDApp):
             self.traveler_config.data.append(float(round(self.extrude_tab.ids.back_speed_slider.value)))
             self.traveler_config.data.append(float(round(self.extrude_tab.ids.extrude_angle_slider.value)))
             self.traveler_config.data.append(float(round(self.extrude_tab.ids.extrude_length_slider.value)))
+            self.traveler_config.data.append(float(round(self.ground_tab.ids.variable3_slider.value)/10))
         elif int(self.drag_traj) == 2:
             # Workspace Traversal Parameters
             # data order: workspace_angular_speed, workspace_moving_angle, orkspace_time_delay
@@ -675,6 +676,7 @@ class TravelerApp(MDApp):
             self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_5.value)))
             self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_6.value)))
             self.traveler_config.data.append(float(round(self.shear_tab.ids.Slider_7.value)))
+            self.traveler_config.data.append(float(round(self.ground_tab.ids.variable3_slider.value)/10))
         elif int(self.drag_traj) == 4:
             # Free Moving Parameters
             # data order: static_length, static_angle, search_start

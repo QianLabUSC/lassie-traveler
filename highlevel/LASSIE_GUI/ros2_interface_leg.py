@@ -408,7 +408,7 @@ class ControlNode_Leg(Node):
                             0.0,
                             0.0,
                             0.0,
-                            0.0,
+                            config.data[4],
                             config.data[1]])
             elif int(mode.traveler_mode) == 2:
                 # Workspace Traversal Parameters
@@ -455,7 +455,7 @@ class ControlNode_Leg(Node):
                             0.0,
                             0.0,
                             0.0,
-                            0.0,
+                            config.data[7],
                             0.0])
             elif int(mode.traveler_mode) == 4:
                 # Free Moving Parameters
@@ -478,7 +478,7 @@ class ControlNode_Leg(Node):
                             config.data[1],
                             config.data[2],
                             0.0,
-                            0.0, # config.ground_height
+                            0.0,
                             0.0])
             elif int(mode.traveler_mode) == 7:
                 # Ground Height Detection Parameters

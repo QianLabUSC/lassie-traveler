@@ -106,6 +106,10 @@ namespace control
         // determine motor positions
         mot_pos0_ = fmodf_0_2pi(traveler_leg_.traveler_chassis.Leg_lf.axis0.position);
         mot_pos1_ = fmodf_0_2pi(traveler_leg_.traveler_chassis.Leg_lf.axis1.position);
+
+        while (mot_pos1_ < mot_pos0_){
+            mot_pos1_ += TWO_PI;
+        }
         
         // update private variables
         float gamma = 0.5 * (mot_pos1_ - mot_pos0_);

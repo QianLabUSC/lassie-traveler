@@ -221,7 +221,8 @@ namespace traveler_namespace
                 curr_waypoint_ = waypoints_[waypoint_index_];
                 traj_complete_ = false;
                 printf("Waypoint Trajectory Initialized\n");
-                printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
+                printf("Previous Waypoint :(%f, %f)\n", prev_waypoint_.point.x, prev_waypoint_.point.y);
+                printf("Current Waypoint %d: (%f, %f)\n", waypoint_index_, curr_waypoint_.point.x, curr_waypoint_.point.y);
             }
             
             if (traj_complete_) {
@@ -235,12 +236,14 @@ namespace traveler_namespace
             // use goToPoint to get to the first waypoint
             if (waypoint_index_ == 0) {
                 // set the first waypoint
-                if(goToPoint(traveler, curr_waypoint_.point)){
+                // if(goToPoint(traveler, curr_waypoint_.point)){
+                if (processWaypoint(traveler)) {
                     waypoint_index_++;
                     state_flag_ = waypoint_index_; // to let us know in the data what waypoint we are going to
                     traveler.traveler_chassis.Leg_lf.state_flag = state_flag_;
                     prev_waypoint_ = curr_waypoint_;
                     curr_waypoint_ = waypoints_[waypoint_index_];
+                    printf("Current Waypoint %d: (%f, %f)\n", waypoint_index_, curr_waypoint_.point.x, curr_waypoint_.point.y);
                 }
             }
             else {
@@ -251,7 +254,7 @@ namespace traveler_namespace
                     if (waypoint_index_ < waypoints_.size()) {
                         prev_waypoint_ = curr_waypoint_;
                         curr_waypoint_ = waypoints_[waypoint_index_];
-                        printf("Current Waypoint: (%f, %f)\n", curr_waypoint_.point.x, curr_waypoint_.point.y);
+                        printf("Current Waypoint %d: (%f, %f)\n", waypoint_index_, curr_waypoint_.point.x, curr_waypoint_.point.y);
                     }
                     else {
                         printf("Waypoint Trajectory Complete\n");

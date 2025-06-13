@@ -1,0 +1,33 @@
+[35m[1mScanning dependencies of target traveler_high_controller[0m
+[ 31%] Built target odrive_can_interface
+[ 37%] [32mBuilding CXX object CMakeFiles/traveler_high_controller.dir/src/controller/trajectories_parser.cpp.o[0m
+[ 43%] [32mBuilding CXX object CMakeFiles/traveler_high_controller.dir/src/controller/Inverse_kinematics.cpp.o[0m
+[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:[m[K In member function ‘[01m[Kbool traveler_namespace::control::TrajectoriesParser::waypointTrajectory(Traveler&)[m[K’:
+[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:254:41:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Waypoint>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wsign-compare[m[K]
+  254 |                     if ([01;35m[Kwaypoint_index_ < waypoints_.size()[m[K) {
+      |                         [01;35m[K~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:[m[K In member function ‘[01m[Kvoid traveler_namespace::control::TrajectoriesParser::generateWaypoints(Traveler&)[m[K’:
+[01m[K/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/traveler_controller/src/controller/trajectories_parser.cpp:393:31:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Waypoint>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K-Wsign-compare[m[K]
+  393 |             for (int i = 0; [01;35m[Ki < waypoints_.size()[m[K; i++) {
+      |                             [01;35m[K~~^~~~~~~~~~~~~~~~~~~[m[K
+[ 50%] [32m[1mLinking CXX executable traveler_high_controller[0m
+[100%] Built target traveler_high_controller
+-- Install configuration: "Debug"
+-- Installing: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/lib/traveler_high_controller/traveler_high_controller
+-- Set runtime path of "/home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/lib/traveler_high_controller/traveler_high_controller" to ""
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/lib/traveler_high_controller/odrive_can_interface
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/ament_index/resource_index/package_run_dependencies/traveler_high_controller
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/ament_index/resource_index/parent_prefix_path/traveler_high_controller
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/ament_prefix_path.sh
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/path.sh
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/environment/path.dsv
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.bash
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.sh
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.zsh
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/local_setup.dsv
+-- Installing: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/package.dsv
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/ament_index/resource_index/packages/traveler_high_controller
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/cmake/traveler_high_controllerConfig.cmake
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/cmake/traveler_high_controllerConfig-version.cmake
+-- Up-to-date: /home/eeb16/Dropbox/USC/Research/Project/lassie-traveler/dependencies/install/traveler_high_controller/share/traveler_high_controller/package.xml
