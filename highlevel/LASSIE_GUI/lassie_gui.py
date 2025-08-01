@@ -36,8 +36,11 @@ from kivymd.uix.tooltip import MDTooltip
 from kivymd.uix.button import MDIconButton
 from logi_web_camera_record import Recorder
 from logi_web_camera2_record import Recorder_2
+import requests
 
 DEBUG = False
+
+GOPRO_IP = "10.5.5.9"
 
 # Initialize parser
 parser = argparse.ArgumentParser(
@@ -595,14 +598,39 @@ class TravelerApp(MDApp):
             self.recorder.saveRecording()
             if self.multi_camera:
                 self.recorder_2.saveRecording()
+    
+    def start_gopro_wifi_camera_recording(self):
+        requests.get(f"http://{GOPRO_IP}/gp/gpControl/command/shutter?p=1")
+
+    def stop_gopro_wifi_camera_recording(self):
+        requests.get(f"http://{GOPRO_IP}/gp/gpControl/command/shutter?p=0")
+    
+    def save_gopro_wifi_camera_recording(self):
+        # wait one second for the GoPro to finish saving the file
+        time.sleep(3)
+        # download the last video file from the GoPro
+        resp = requests.get(f"http://{GOPRO_IP}/gp/gpMediaList")
+        media = resp.json()
+        folder = media['media'][-1]['d']
+        file = media['media'][-1]['fs'][-1]['n']
+        r = requests.get(f"http://{GOPRO_IP}:8080/videos/DCIM/{folder}/{file}")
+        REC_FOLDER = "experiment_records/" 
+        CURR_FOLDER = os.getcwd()
+        PARENT_FOLDER = os.path.dirname(CURR_FOLDER)
+        COMBINED_HIGH_PATH = os.path.join(PARENT_FOLDER, REC_FOLDER + self.file_name + '.mp4')
+        if not os.path.exists(os.path.dirname(COMBINED_HIGH_PATH)):
+            os.makedirs(os.path.dirname(COMBINED_HIGH_PATH))
+        with open(COMBINED_HIGH_PATH, "wb") as f:
+            f.write(r.content)
+        print("Finish downloading video\n")
 
     def check_if_start(self):
         if(self.start_robot == True):
             self.stop_trajectory()
             
             # custom override movement to move leg out of way after extrusion
-            # if (self.drag_traj == 1):
-            #     self.automatic_move(170, 45)
+            if (self.drag_traj == 1):
+                self.automatic_move(170, 45)
         else:
             self.run_trajectory()
 
@@ -640,6 +668,10 @@ class TravelerApp(MDApp):
         else:
             self.file_name = 'AMES/' + self.screen.ids.filename.text + "_"+ self.trial_start_time
         # self.start_logi_usb_camera_recording()
+        try:
+            self.start_gopro_wifi_camera_recording()
+        except Exception as e:
+            print("Error starting GoPro recording: ", e)
         self.ros_node.calibrate(self.drag_traj, self.inputargs.mode) 
         self.updateplotflag = True
         self.ros_node.update_force_data(True)   
@@ -723,7 +755,15 @@ class TravelerApp(MDApp):
         else:
             self.ros_node.update_plot()
         # self.stop_logi_usb_camera_recording()
+        try:
+            self.stop_gopro_wifi_camera_recording()
+        except Exception as e:
+            print("Error stopping GoPro recording: ", e)
         # self.save_logi_usb_camera_recording()
+        try:
+            self.save_gopro_wifi_camera_recording()
+        except Exception as e:
+            print("Error saving GoPro recording: ", e)
         self.on_download_data()
         
         if (self.demo and self.drag_traj == 1):
