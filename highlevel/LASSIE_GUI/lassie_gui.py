@@ -600,29 +600,32 @@ class TravelerApp(MDApp):
                 self.recorder_2.saveRecording()
     
     def start_gopro_wifi_camera_recording(self):
-        requests.get(f"http://{GOPRO_IP}/gp/gpControl/command/shutter?p=1")
+        if(self.drag_traj != 4 and self.drag_traj != 7):
+            requests.get(f"http://{GOPRO_IP}/gp/gpControl/command/shutter?p=1")
 
     def stop_gopro_wifi_camera_recording(self):
-        requests.get(f"http://{GOPRO_IP}/gp/gpControl/command/shutter?p=0")
+        if(self.drag_traj != 4 and self.drag_traj != 7):
+            requests.get(f"http://{GOPRO_IP}/gp/gpControl/command/shutter?p=0")
     
     def save_gopro_wifi_camera_recording(self):
-        # wait one second for the GoPro to finish saving the file
-        time.sleep(3)
-        # download the last video file from the GoPro
-        resp = requests.get(f"http://{GOPRO_IP}/gp/gpMediaList")
-        media = resp.json()
-        folder = media['media'][-1]['d']
-        file = media['media'][-1]['fs'][-1]['n']
-        r = requests.get(f"http://{GOPRO_IP}:8080/videos/DCIM/{folder}/{file}")
-        REC_FOLDER = "experiment_records/" 
-        CURR_FOLDER = os.getcwd()
-        PARENT_FOLDER = os.path.dirname(CURR_FOLDER)
-        COMBINED_HIGH_PATH = os.path.join(PARENT_FOLDER, REC_FOLDER + self.file_name + '.mp4')
-        if not os.path.exists(os.path.dirname(COMBINED_HIGH_PATH)):
-            os.makedirs(os.path.dirname(COMBINED_HIGH_PATH))
-        with open(COMBINED_HIGH_PATH, "wb") as f:
-            f.write(r.content)
-        print("Finish downloading video\n")
+        if(self.drag_traj != 4 and self.drag_traj != 7):
+            # wait one second for the GoPro to finish saving the file
+            time.sleep(3)
+            # download the last video file from the GoPro
+            resp = requests.get(f"http://{GOPRO_IP}/gp/gpMediaList")
+            media = resp.json()
+            folder = media['media'][-1]['d']
+            file = media['media'][-1]['fs'][-1]['n']
+            r = requests.get(f"http://{GOPRO_IP}:8080/videos/DCIM/{folder}/{file}")
+            REC_FOLDER = "experiment_records/" 
+            CURR_FOLDER = os.getcwd()
+            PARENT_FOLDER = os.path.dirname(CURR_FOLDER)
+            COMBINED_HIGH_PATH = os.path.join(PARENT_FOLDER, REC_FOLDER + self.file_name + '.mp4')
+            if not os.path.exists(os.path.dirname(COMBINED_HIGH_PATH)):
+                os.makedirs(os.path.dirname(COMBINED_HIGH_PATH))
+            with open(COMBINED_HIGH_PATH, "wb") as f:
+                f.write(r.content)
+            print("Finish downloading video\n")
 
     def check_if_start(self):
         if(self.start_robot == True):
