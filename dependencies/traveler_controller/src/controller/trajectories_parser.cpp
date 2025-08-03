@@ -383,6 +383,18 @@ namespace traveler_namespace
                 case 4:
                     // static leg movement
                     break;
+                case 8:
+                {
+                    // general trajectory
+                    for(int i = 0; i < traveler.traj_data.num_waypoints; i++)
+                    {
+                        float x = traveler.traj_data.waypoints_x[i];
+                        float y = traveler.traj_data.waypoints_y[i];
+                        float v = traveler.traj_data.waypoints_v[i];
+                        waypoints_.push_back(Waypoint(x, y, v, 0.0f));
+                    }
+                    break;
+                }
                 default:
                     // no trajectory selected
                     break;
@@ -619,19 +631,10 @@ namespace traveler_namespace
                 if (first_iteration)
                 {
                     printf("General Trajectory\n");
-                    destination = {traveler.traj_data.waypoints_x[0], traveler.traj_data.waypoints_y[0]};
+                    printf("Starting Toe Position: (%f, %f)\n", traveler.traveler_chassis.Leg_lf.toe_position.x, traveler.traveler_chassis.Leg_lf.toe_position.y);
                 }
-                if (run_)
-                {
-                    // first go to the first waypoint
-                    int status = goToPoint(traveler, destination);
-                    run_ = (status == 0) ? true : false;
-                }
-                else
-                {
-                    // then go to the following waypoints
-                    waypointTrajectory(traveler);
-                }
+                // then go to the following waypoints
+                waypointTrajectory(traveler);
                 break;
 
             default:

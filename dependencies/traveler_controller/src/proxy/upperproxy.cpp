@@ -84,11 +84,15 @@ void upperproxy::handle_gui
             // Generate Trajectory Parameters
             // data order: waypoints_x, waypoints_y, waypoints_t
             traveler_leg.traj_data.num_waypoints = 0;
+            traveler_leg.traj_data.waypoints_x.clear();
+            traveler_leg.traj_data.waypoints_y.clear();
+            traveler_leg.traj_data.waypoints_v.clear();
             for(size_t i = 0; i < msg->data.size() - 2; i += 3){
                 traveler_leg.traj_data.waypoints_x.push_back(msg->data[i]);
                 traveler_leg.traj_data.waypoints_y.push_back(msg->data[i + 1]);
                 traveler_leg.traj_data.waypoints_v.push_back(msg->data[i + 2]);
                 traveler_leg.traj_data.num_waypoints = traveler_leg.traj_data.num_waypoints + 1;
+                printf("Waypoint %d: (%f, %f), vel: %f\n", traveler_leg.traj_data.num_waypoints, msg->data[i], msg->data[i+1], msg->data[i+2]);
             }
         }
     }
