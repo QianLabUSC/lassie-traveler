@@ -9,13 +9,13 @@ def start_recording():
 def stop_recording():
     requests.get(f"http://{GOPRO_IP}/gp/gpControl/command/shutter?p=0")
 
-def download_video():
+def download_video(filename = "my_video.mp4"):
     resp = requests.get(f"http://{GOPRO_IP}/gp/gpMediaList")
     media = resp.json()
     folder = media['media'][-1]['d']
     file = media['media'][-1]['fs'][-1]['n']
     r = requests.get(f"http://{GOPRO_IP}:8080/videos/DCIM/{folder}/{file}")
-    with open("my_video.mp4", "wb") as f:
+    with open(filename, "wb") as f:
         f.write(r.content)
 
 start_recording()
